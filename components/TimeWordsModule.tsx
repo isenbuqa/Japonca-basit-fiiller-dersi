@@ -18,8 +18,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'あさ', 
     romaji: 'Asa', 
     meaning: 'Sabah', 
-    // Browser-native ESM environment cannot import pngs. 
-    // We must reference them as static assets from the public root.
+    // Reference images from the public directory using absolute paths
     imageUrl: '/images/asa.png', 
     theme: 'bg-gradient-to-br from-orange-300 to-rose-400',
     textColor: 'text-orange-900'
