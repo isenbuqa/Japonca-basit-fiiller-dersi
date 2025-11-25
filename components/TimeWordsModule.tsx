@@ -1,13 +1,13 @@
 
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Sun, Moon, Sunrise } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface TimeWord {
   id: string;
   text: string;     // Japanese
   romaji: string;   // Romaji
   meaning: string;  // Turkish
-  imageUrl: string; // URL
+  imageUrl: string; // Image URL string
   theme: string;    // CSS Classes for background
   textColor: string;
 }
@@ -18,7 +18,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'あさ', 
     romaji: 'Asa', 
     meaning: 'Sabah', 
-    imageUrl: 'https://prnt.sc/nAoxvOyyBHeO', // Sunrise
+    imageUrl: 'asa.png', 
     theme: 'bg-gradient-to-br from-orange-300 to-rose-400',
     textColor: 'text-orange-900'
   },
@@ -27,7 +27,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'ひる', 
     romaji: 'Hiru', 
     meaning: 'Öğle', 
-    imageUrl: 'https://images.unsplash.com/photo-1596522354896-40543853f0f3?w=800&q=80', // Sunny Sky
+    imageUrl: 'hiru.png', 
     theme: 'bg-gradient-to-br from-sky-300 to-blue-400',
     textColor: 'text-blue-900'
   },
@@ -36,7 +36,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'よる', 
     romaji: 'Yoru', 
     meaning: 'Akşam / Gece', 
-    imageUrl: 'https://images.unsplash.com/photo-1532978028346-6bf4c062ce53?w=800&q=80', // Night Moon
+    imageUrl: 'yoru.png', 
     theme: 'bg-gradient-to-br from-indigo-500 to-purple-800',
     textColor: 'text-white'
   }
