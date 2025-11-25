@@ -18,8 +18,8 @@ const TIME_WORDS: TimeWord[] = [
     text: 'あさ', 
     romaji: 'Asa', 
     meaning: 'Sabah', 
-    // Using GitHub Raw URL for reliable loading
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/main/public/images/asa.png', 
+    // Using high-quality Unsplash image for Sunrise
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/asa.jpg', 
     theme: 'bg-gradient-to-br from-orange-300 to-rose-400',
     textColor: 'text-orange-900'
   },
@@ -28,7 +28,8 @@ const TIME_WORDS: TimeWord[] = [
     text: 'ひる', 
     romaji: 'Hiru', 
     meaning: 'Öğle', 
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/main/public/images/hiru.png', 
+    // Updated to a more reliable Unsplash image for Sunny Sky/Noon
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/hiru.jpg', 
     theme: 'bg-gradient-to-br from-sky-300 to-blue-400',
     textColor: 'text-blue-900'
   },
@@ -37,7 +38,8 @@ const TIME_WORDS: TimeWord[] = [
     text: 'よる', 
     romaji: 'Yoru', 
     meaning: 'Akşam / Gece', 
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/main/public/images/yoru.png', 
+    // Using high-quality Unsplash image for Moon/Night
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/yoru.jpg', 
     theme: 'bg-gradient-to-br from-indigo-500 to-purple-800',
     textColor: 'text-white'
   }
@@ -93,10 +95,6 @@ const TimeWordsModule: React.FC<TimeWordsModuleProps> = ({ onBack }) => {
                src={currentCard.imageUrl} 
                alt={currentCard.romaji}
                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-               onError={(e) => {
-                 // Fallback if image fails to load completely
-                 (e.target as HTMLImageElement).src = 'https://placehold.co/400x400?text=' + currentCard.romaji;
-               }}
              />
              {/* Shine effect */}
              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
