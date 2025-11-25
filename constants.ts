@@ -19,14 +19,14 @@ export const VERBS: VerbItem[] = [
 export const WORDS: WordItem[] = [
   { id: '1', text: '本', romaji: 'Hon', image: '📚', category: 'object', validVerbIds: ['v6', 'v7', 'v5'] }, // Read, Buy, Make
   { id: '2', text: 'パン', romaji: 'Pan', image: '🍞', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
-  { id: '3', text: 'すし', romaji: 'Sushi', image: '🍣', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
-  { id: '4', text: 'ケーキ', romaji: 'Kēki', image: '🍰', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
+  { id: '3', text: 'すし', romaji: 'Sushi', image: 'Sushi', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
+  { id: '4', text: 'ケーキ', romaji: 'Keeki', image: '🍰', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
   { id: '5', text: '肉', romaji: 'Niku', image: '🥩', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
   { id: '6', text: '卵', romaji: 'Tamago', image: '🥚', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
   { id: '7', text: 'ご飯', romaji: 'Gohan', image: '🍚', category: 'object', validVerbIds: ['v1', 'v5'] }, // Eat, Make
   { id: '8', text: '水', romaji: 'Mizu', image: '💧', category: 'object', validVerbIds: ['v2', 'v7'] }, // Drink, Buy
-  { id: '9', text: 'コーヒー', romaji: 'Kōhī', image: '☕', category: 'object', validVerbIds: ['v2', 'v5', 'v7'] }, // Drink, Make, Buy
-  { id: '10', text: 'コーラ', romaji: 'Kōra', image: '🥤', category: 'object', validVerbIds: ['v2', 'v7'] }, // Drink, Buy
+  { id: '9', text: 'コーヒー', romaji: 'Koohii', image: '☕', category: 'object', validVerbIds: ['v2', 'v5', 'v7'] }, // Drink, Make, Buy
+  { id: '10', text: 'コーラ', romaji: 'Koora', image: '🥤', category: 'object', validVerbIds: ['v2', 'v7'] }, // Drink, Buy
   { id: '11', text: 'あさ', romaji: 'Asa', image: '🌅', category: 'time', validVerbIds: ['v9'] }, // Wake up
   { id: '13', text: 'よる', romaji: 'Yoru', image: '🌙', category: 'time', validVerbIds: ['v8'] }, // Sleep
   { id: '14', text: 'テレビ', romaji: 'Terebi', image: '📺', category: 'object', validVerbIds: ['v4', 'v7'] }, // Watch, Buy
