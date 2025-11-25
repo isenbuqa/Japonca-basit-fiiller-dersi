@@ -18,8 +18,8 @@ const TIME_WORDS: TimeWord[] = [
     text: 'あさ', 
     romaji: 'Asa', 
     meaning: 'Sabah', 
-    // Reference images from the public directory using absolute paths
-    imageUrl: '/images/asa.png', 
+    // Using GitHub Raw URL for reliable loading
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/main/public/images/asa.png', 
     theme: 'bg-gradient-to-br from-orange-300 to-rose-400',
     textColor: 'text-orange-900'
   },
@@ -28,7 +28,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'ひる', 
     romaji: 'Hiru', 
     meaning: 'Öğle', 
-    imageUrl: '/images/hiru.png', 
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/main/public/images/hiru.png', 
     theme: 'bg-gradient-to-br from-sky-300 to-blue-400',
     textColor: 'text-blue-900'
   },
@@ -37,7 +37,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'よる', 
     romaji: 'Yoru', 
     meaning: 'Akşam / Gece', 
-    imageUrl: '/images/yoru.png', 
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/main/public/images/yoru.png', 
     theme: 'bg-gradient-to-br from-indigo-500 to-purple-800',
     textColor: 'text-white'
   }
@@ -94,7 +94,7 @@ const TimeWordsModule: React.FC<TimeWordsModuleProps> = ({ onBack }) => {
                alt={currentCard.romaji}
                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                onError={(e) => {
-                 // Fallback if image fails to load
+                 // Fallback if image fails to load completely
                  (e.target as HTMLImageElement).src = 'https://placehold.co/400x400?text=' + currentCard.romaji;
                }}
              />
