@@ -19,7 +19,7 @@ export const VERBS: VerbItem[] = [
 export const WORDS: WordItem[] = [
   { id: '1', text: '本', romaji: 'Hon', image: '📚', category: 'object', validVerbIds: ['v6', 'v7', 'v5'] }, // Read, Buy, Make
   { id: '2', text: 'パン', romaji: 'Pan', image: '🍞', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
-  { id: '3', text: 'すし', romaji: 'Sushi', image: 'Sushi', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
+  { id: '3', text: 'すし', romaji: 'Sushi', image: '🍣', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
   { id: '4', text: 'ケーキ', romaji: 'Keeki', image: '🍰', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
   { id: '5', text: '肉', romaji: 'Niku', image: '🥩', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
   { id: '6', text: '卵', romaji: 'Tamago', image: '🥚', category: 'object', validVerbIds: ['v1', 'v5', 'v7'] }, // Eat, Make, Buy
