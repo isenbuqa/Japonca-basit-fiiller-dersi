@@ -22,7 +22,7 @@ const QUESTIONS: Question[] = [
     romajiQuestion: 'Kore wa nan desu ka?',
     japaneseQuestion: 'これは何ですか？',
     turkishMeaning: 'Bu nedir?',
-    image: <span className="text-9xl">📚</span>,
+    image: <span className="text-7xl md:text-9xl">📚</span>,
     correctAnswer: '本',
     options: [
       { text: '本', romaji: 'Hon' },
@@ -37,7 +37,7 @@ const QUESTIONS: Question[] = [
     romajiQuestion: 'Kore wa nan desu ka?',
     japaneseQuestion: 'これは何ですか？',
     turkishMeaning: 'Bu nedir?',
-    image: <span className="text-9xl">📓</span>,
+    image: <span className="text-7xl md:text-9xl">📓</span>,
     correctAnswer: 'ノート',
     options: [
       { text: '本', romaji: 'Hon' },
@@ -52,7 +52,7 @@ const QUESTIONS: Question[] = [
     romajiQuestion: 'Kore wa nan desu ka?',
     japaneseQuestion: 'これは何ですか？',
     turkishMeaning: 'Bu nedir?',
-    image: <span className="text-9xl">✏️</span>,
+    image: <span className="text-7xl md:text-9xl">✏️</span>,
     correctAnswer: '鉛筆',
     options: [
       { text: '本', romaji: 'Hon' },
@@ -67,7 +67,7 @@ const QUESTIONS: Question[] = [
     romajiQuestion: 'Kore wa nan desu ka?',
     japaneseQuestion: 'これは何ですか？',
     turkishMeaning: 'Bu nedir?',
-    image: <span className="text-9xl">📱</span>,
+    image: <span className="text-7xl md:text-9xl">📱</span>,
     correctAnswer: '携帯',
     options: [
       { text: '本', romaji: 'Hon' },
@@ -87,7 +87,7 @@ const QUESTIONS: Question[] = [
       <img 
         src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kore.jpg" 
         alt="Kore" 
-        className="h-64 w-full object-contain mx-auto rounded-lg" 
+        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
       />
     ),
     correctAnswer: 'これ',
@@ -107,7 +107,7 @@ const QUESTIONS: Question[] = [
       <img 
         src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/sore.jpg" 
         alt="Sore" 
-        className="h-64 w-full object-contain mx-auto rounded-lg" 
+        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
       />
     ),
     correctAnswer: 'それ',
@@ -127,7 +127,7 @@ const QUESTIONS: Question[] = [
       <img 
         src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/are.jpg" 
         alt="Are" 
-        className="h-64 w-full object-contain mx-auto rounded-lg" 
+        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
       />
     ),
     correctAnswer: 'あれ',
@@ -178,10 +178,10 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
   if (isFinished) {
     return (
       <div className="min-h-screen bg-blue-50 flex flex-col items-center justify-center p-6 text-center">
-        <CheckCircle className="w-24 h-24 text-green-500 mb-6" />
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">Tebrikler!</h2>
+        <CheckCircle className="w-20 h-20 md:w-24 md:h-24 text-green-500 mb-6" />
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Tebrikler!</h2>
         <p className="text-gray-600 mb-8">Konu tekrarını tamamladın.</p>
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4 w-full max-w-xs md:max-w-md mx-auto">
           <button
             onClick={() => {
               setCurrentIndex(0);
@@ -189,13 +189,13 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
               setIsCorrect(null);
               setIsFinished(false);
             }}
-            className="px-6 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 transition"
+            className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 transition"
           >
             Tekrar Yap
           </button>
           <button
             onClick={onBack}
-            className="px-6 py-3 bg-gray-200 text-gray-700 rounded-full font-bold hover:bg-gray-300 transition"
+            className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-full font-bold hover:bg-gray-300 transition"
           >
             Menüye Dön
           </button>
@@ -207,41 +207,41 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
   return (
     <div className="min-h-screen bg-blue-50 flex flex-col">
       {/* Header */}
-      <div className="bg-white p-4 shadow-sm flex items-center justify-between z-10 relative">
+      <div className="bg-white p-3 md:p-4 shadow-sm flex items-center justify-between z-10 relative">
         <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full">
-          <ArrowLeft className="w-6 h-6 text-gray-600" />
+          <ArrowLeft className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
         </button>
-        <span className="font-bold text-gray-700">
+        <span className="font-bold text-gray-700 text-sm md:text-base">
           Soru {currentIndex + 1} / {QUESTIONS.length}
         </span>
         <div className="w-10"></div> {/* Spacer */}
       </div>
 
-      <div className="flex-1 flex flex-col items-center justify-center p-4 max-w-3xl mx-auto w-full">
+      <div className="flex-1 flex flex-col items-center p-4 max-w-3xl mx-auto w-full overflow-y-auto">
         {/* Question Area */}
-        <div className="bg-white rounded-3xl shadow-xl w-full p-8 mb-6 text-center border-4 border-blue-100">
+        <div className="bg-white rounded-3xl shadow-xl w-full p-6 md:p-8 mb-4 md:mb-6 text-center border-4 border-blue-100 mt-2">
           
-          <div className="mb-6">
+          <div className="mb-4 md:mb-6">
             {/* Primary: Romaji Question */}
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-2 tracking-tight">
+            <h2 className="text-2xl md:text-4xl font-extrabold text-gray-800 mb-2 tracking-tight">
               {currentQuestion.romajiQuestion}
             </h2>
             {/* Secondary: Japanese Question */}
-            <p className="text-lg text-gray-400 font-medium opacity-80 mb-1">
+            <p className="text-base md:text-lg text-gray-400 font-medium opacity-80 mb-1">
               {currentQuestion.japaneseQuestion}
             </p>
             {/* Tertiary: Turkish Meaning */}
-            <p className="text-sm text-blue-500 font-bold">
+            <p className="text-xs md:text-sm text-blue-500 font-bold">
               ({currentQuestion.turkishMeaning})
             </p>
           </div>
           
-          <div className="mb-8 flex items-center justify-center min-h-[160px]">
+          <div className="mb-6 md:mb-8 flex items-center justify-center min-h-[120px] md:min-h-[160px]">
             {currentQuestion.image}
           </div>
 
           {/* Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {currentQuestion.options.map((opt) => {
               let btnClass = "bg-gray-50 border-2 border-gray-200 hover:border-blue-300 text-gray-700";
               
@@ -261,13 +261,13 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
                   onClick={() => handleOptionSelect(opt.text)}
                   disabled={!!selectedOption}
                   className={`
-                    p-4 rounded-xl text-lg transition-all transform active:scale-95
-                    flex flex-col items-center justify-center min-h-[80px]
+                    p-3 md:p-4 rounded-xl text-lg transition-all transform active:scale-95
+                    flex flex-col items-center justify-center min-h-[60px] md:min-h-[80px]
                     ${btnClass}
                   `}
                 >
-                  <span className="font-bold text-2xl mb-1">{opt.romaji}</span>
-                  <span className="text-sm opacity-60 font-medium">{opt.text}</span>
+                  <span className="font-bold text-xl md:text-2xl mb-0.5 md:mb-1">{opt.romaji}</span>
+                  <span className="text-xs md:text-sm opacity-60 font-medium">{opt.text}</span>
                 </button>
               );
             })}
@@ -277,17 +277,17 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
         {/* Feedback / Next Button */}
         {selectedOption && (
           <div className={`
-            w-full p-4 rounded-xl flex items-center justify-between animate-fade-in shadow-lg
+            w-full p-4 rounded-xl flex items-center justify-between animate-fade-in shadow-lg mb-6
             ${isCorrect ? 'bg-green-500 text-white' : 'bg-red-500 text-white'}
           `}>
             <div className="flex items-center gap-3">
-              {isCorrect ? <CheckCircle className="w-8 h-8" /> : <XCircle className="w-8 h-8" />}
+              {isCorrect ? <CheckCircle className="w-6 h-6 md:w-8 md:h-8" /> : <XCircle className="w-6 h-6 md:w-8 md:h-8" />}
               <div className="flex flex-col text-left">
-                <span className="font-bold text-lg leading-tight">
+                <span className="font-bold text-base md:text-lg leading-tight">
                   {isCorrect ? 'Harika!' : 'Yanlış'}
                 </span>
                 {!isCorrect && (
-                   <span className="text-sm opacity-90">
+                   <span className="text-xs md:text-sm opacity-90">
                      Doğru cevap: {currentQuestion.options.find(o => o.text === currentQuestion.correctAnswer)?.romaji}
                    </span>
                 )}
@@ -295,7 +295,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
             </div>
             <button
               onClick={handleNext}
-              className="bg-white text-gray-900 px-6 py-3 rounded-lg font-bold hover:bg-gray-100 flex items-center gap-2 shadow-sm transition-transform active:scale-95"
+              className="bg-white text-gray-900 px-4 py-2 md:px-6 md:py-3 rounded-lg font-bold hover:bg-gray-100 flex items-center gap-2 shadow-sm transition-transform active:scale-95 text-sm md:text-base"
             >
               Devam <ArrowRight className="w-4 h-4" />
             </button>
