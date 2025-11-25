@@ -26,7 +26,7 @@ const VOCAB_LIST: VocabCard[] = [
     text: '食べます', 
     romaji: 'Tabemas', 
     meaning: 'Yemek (Fiil)', 
-    image: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/tabemasu.jpg', 
+    image: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/tabemasu.jpg', 
     type: 'verb' 
   },
   { 
@@ -34,7 +34,7 @@ const VOCAB_LIST: VocabCard[] = [
     text: '飲みます', 
     romaji: 'Nomimas', 
     meaning: 'İçmek (Fiil)', 
-    image: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/nomimasu.jpg', 
+    image: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/nomimasu.jpg', 
     type: 'verb' 
   },
 ];

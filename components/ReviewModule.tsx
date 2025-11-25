@@ -85,7 +85,7 @@ const QUESTIONS: Question[] = [
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
       <img 
-        src="https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/kore.jpg" 
+        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kore.jpg" 
         alt="Kore" 
         className="h-64 w-full object-contain mx-auto rounded-lg" 
       />
@@ -105,7 +105,7 @@ const QUESTIONS: Question[] = [
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
       <img 
-        src="https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/sore.jpg" 
+        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/sore.jpg" 
         alt="Sore" 
         className="h-64 w-full object-contain mx-auto rounded-lg" 
       />
@@ -125,7 +125,7 @@ const QUESTIONS: Question[] = [
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
       <img 
-        src="https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/are.jpg" 
+        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/are.jpg" 
         alt="Are" 
         className="h-64 w-full object-contain mx-auto rounded-lg" 
       />

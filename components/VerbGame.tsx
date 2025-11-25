@@ -51,7 +51,7 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
       playWrongSound();
     }
 
-    // 2. Show Modal Immediately with Loading State (Short)
+    // 2. Show Modal Immediately with Loading State
     const initialResult: ValidationResult = {
       isCorrect,
       isLoading: true,
@@ -62,13 +62,15 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
     setValidationResult(initialResult);
     setGameState('feedback');
 
-    // 3. Fetch Predefined Explanation (Now Instant)
-    const detailedResult = await generateFeedback(currentWord.id, verb.id, isCorrect);
+    // 3. Background: Fetch Explanation from Gemini
+    const detailedResult = await generateFeedback(currentWord.text, verb.text, isCorrect);
     
     // Only update if we are still looking at the same word/verb
     setValidationResult(prev => {
-      // Ensure we don't overwrite if the user already moved on (unlikely with modal)
-      return detailedResult;
+      if (prev && prev.isCorrect === isCorrect) {
+        return detailedResult;
+      }
+      return prev;
     });
   };
 
@@ -106,6 +108,7 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
           <p className="text-rose-500 font-medium mb-8">Fiil Ustası</p>
           <p className="text-gray-600 mb-8 leading-relaxed">
             Ekranda çıkan nesneleri veya zamanları doğru fiillerle eşleştir.
+            <br/><span className="text-sm text-gray-400">Gemini AI tarafından desteklenmektedir</span>
           </p>
           <button 
             onClick={startGame}

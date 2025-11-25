@@ -16,49 +16,49 @@ const VERBS_LIST: VerbCard[] = [
     romaji: 'Kikimas', 
     hiragana: 'ききます', 
     meaning: 'Dinlemek',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/kikimasu.jpg'
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kikimasu.jpg'
   },
   { 
     id: '2', 
     romaji: 'Mimas', 
     hiragana: 'みます', 
     meaning: 'İzlemek / Görmek',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/mimasu.jpg'
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/mimasu.jpg'
   },
   { 
     id: '3', 
     romaji: 'Tsukurimas', 
     hiragana: 'つくります', 
     meaning: 'Yapmak (Yemek vb.)',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/tsukurimasu.jpg'
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/tsukurimasu.jpg'
   },
   { 
     id: '4', 
     romaji: 'Yomimas', 
     hiragana: 'よみます', 
     meaning: 'Okumak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/yomimasu.jpg'
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/yomimasu.jpg'
   },
   { 
     id: '5', 
     romaji: 'Kaimas', 
     hiragana: 'かいます', 
     meaning: 'Satın Almak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/kaimasu.jpg'
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kaimasu.jpg'
   },
   { 
     id: '6', 
     romaji: 'Nemas', 
     hiragana: 'ねます', 
     meaning: 'Uyumak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/nemasu.jpg'
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/nemasu.jpg'
   },
   { 
     id: '7', 
     romaji: 'Okimas', 
     hiragana: 'おきます', 
     meaning: 'Uyanmak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/okimasu.jpg'
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/okimasu.jpg'
   },
 ];
 
