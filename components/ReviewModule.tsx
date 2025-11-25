@@ -14,52 +14,6 @@ interface Question {
   options: { text: string; romaji: string }[];
 }
 
-// Custom SVGs for Kore/Sore/Are
-const StickFigure = ({ isSpeaker, hasObject, isFar }: { isSpeaker: boolean; hasObject: boolean; isFar?: boolean }) => (
-  <div className="flex flex-col items-center relative mx-8">
-    {/* Speech Bubble for Speaker */}
-    {isSpeaker && (
-      <div className="absolute -top-16 -right-12 bg-white border-2 border-gray-800 rounded-2xl p-2 rounded-bl-none animate-bounce-short">
-        <span className="text-xl font-bold text-gray-800">?</span>
-      </div>
-    )}
-    
-    {/* Head */}
-    <div className="w-16 h-16 rounded-full border-4 border-gray-800 bg-white relative z-10">
-      {/* Eyes */}
-      <div className="absolute top-5 left-4 w-2 h-2 bg-gray-800 rounded-full"></div>
-      <div className="absolute top-5 right-4 w-2 h-2 bg-gray-800 rounded-full"></div>
-      {/* Mouth */}
-      {isSpeaker ? (
-        <div className="absolute bottom-4 left-6 w-4 h-4 bg-gray-800 rounded-full"></div>
-      ) : (
-        <div className="absolute bottom-4 left-5 w-6 h-1 bg-gray-800"></div>
-      )}
-    </div>
-    {/* Body */}
-    <div className="w-1 h-20 bg-gray-800"></div>
-    {/* Arms */}
-    <div className="absolute top-20 w-24 h-1 bg-gray-800"></div>
-    {/* Hands holding object */}
-    {hasObject && (
-      <div className="absolute top-14 left-10 bg-white border-2 border-gray-800 w-12 h-16 rounded flex items-center justify-center transform -rotate-12 shadow-sm z-20">
-         <span className="text-xs font-bold">BOOK</span>
-      </div>
-    )}
-    {/* Legs */}
-    <div className="absolute bottom-0 w-full flex justify-between px-4">
-      <div className="w-1 h-16 bg-gray-800 transform -rotate-12 origin-top"></div>
-      <div className="w-1 h-16 bg-gray-800 transform rotate-12 origin-top"></div>
-    </div>
-  </div>
-);
-
-const FarObject = () => (
-  <div className="absolute top-10 right-0 transform translate-x-24 md:translate-x-48 bg-white border-2 border-gray-800 w-16 h-20 rounded flex items-center justify-center shadow-md animate-bounce">
-    <span className="text-sm font-bold">BOOK</span>
-  </div>
-);
-
 const QUESTIONS: Question[] = [
   // --- Vocabulary Section ---
   {
@@ -130,10 +84,11 @@ const QUESTIONS: Question[] = [
     japaneseQuestion: 'どれですか？',
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
-      <div className="flex items-end justify-center h-64 w-full relative">
-        <StickFigure isSpeaker={true} hasObject={true} />
-        <StickFigure isSpeaker={false} hasObject={false} />
-      </div>
+      <img 
+        src="https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/kore.jpg" 
+        alt="Kore" 
+        className="h-64 w-full object-contain mx-auto rounded-lg" 
+      />
     ),
     correctAnswer: 'これ',
     options: [
@@ -149,10 +104,11 @@ const QUESTIONS: Question[] = [
     japaneseQuestion: 'どれですか？',
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
-      <div className="flex items-end justify-center h-64 w-full relative">
-        <StickFigure isSpeaker={true} hasObject={false} />
-        <StickFigure isSpeaker={false} hasObject={true} />
-      </div>
+      <img 
+        src="https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/sore.jpg" 
+        alt="Sore" 
+        className="h-64 w-full object-contain mx-auto rounded-lg" 
+      />
     ),
     correctAnswer: 'それ',
     options: [
@@ -168,11 +124,11 @@ const QUESTIONS: Question[] = [
     japaneseQuestion: 'どれですか？',
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
-      <div className="flex items-end justify-center h-64 w-full relative max-w-md mx-auto">
-        <StickFigure isSpeaker={true} hasObject={false} />
-        <StickFigure isSpeaker={false} hasObject={false} />
-        <FarObject />
-      </div>
+      <img 
+        src="https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/are.jpg" 
+        alt="Are" 
+        className="h-64 w-full object-contain mx-auto rounded-lg" 
+      />
     ),
     correctAnswer: 'あれ',
     options: [

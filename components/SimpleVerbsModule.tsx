@@ -11,13 +11,55 @@ interface VerbCard {
 }
 
 const VERBS_LIST: VerbCard[] = [
-  { id: '1', romaji: 'Kikimas', hiragana: 'ききます', meaning: 'Dinlemek' },
-  { id: '2', romaji: 'Mimas', hiragana: 'みます', meaning: 'İzlemek / Görmek' },
-  { id: '3', romaji: 'Tsukurimas', hiragana: 'つくります', meaning: 'Yapmak (Yemek vb.)' },
-  { id: '4', romaji: 'Yomimas', hiragana: 'よみます', meaning: 'Okumak' },
-  { id: '5', romaji: 'Kaimas', hiragana: 'かいます', meaning: 'Satın Almak' },
-  { id: '6', romaji: 'Nemas', hiragana: 'ねます', meaning: 'Uyumak' },
-  { id: '7', romaji: 'Okimas', hiragana: 'おきます', meaning: 'Uyanmak' },
+  { 
+    id: '1', 
+    romaji: 'Kikimas', 
+    hiragana: 'ききます', 
+    meaning: 'Dinlemek',
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/kikimasu.jpg'
+  },
+  { 
+    id: '2', 
+    romaji: 'Mimas', 
+    hiragana: 'みます', 
+    meaning: 'İzlemek / Görmek',
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/mimasu.jpg'
+  },
+  { 
+    id: '3', 
+    romaji: 'Tsukurimas', 
+    hiragana: 'つくります', 
+    meaning: 'Yapmak (Yemek vb.)',
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/tsukurimasu.jpg'
+  },
+  { 
+    id: '4', 
+    romaji: 'Yomimas', 
+    hiragana: 'よみます', 
+    meaning: 'Okumak',
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/yomimasu.jpg'
+  },
+  { 
+    id: '5', 
+    romaji: 'Kaimas', 
+    hiragana: 'かいます', 
+    meaning: 'Satın Almak',
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/kaimasu.jpg'
+  },
+  { 
+    id: '6', 
+    romaji: 'Nemas', 
+    hiragana: 'ねます', 
+    meaning: 'Uyumak',
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/nemasu.jpg'
+  },
+  { 
+    id: '7', 
+    romaji: 'Okimas', 
+    hiragana: 'おきます', 
+    meaning: 'Uyanmak',
+    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/okimasu.jpg'
+  },
 ];
 
 interface SimpleVerbsModuleProps {
@@ -59,16 +101,19 @@ const SimpleVerbsModule: React.FC<SimpleVerbsModuleProps> = ({ onBack }) => {
         {/* Flashcard */}
         <div className="w-full bg-white rounded-3xl shadow-2xl border-4 border-indigo-100 overflow-hidden relative mb-8 aspect-[3/4] flex flex-col items-center p-6 transition-all duration-300">
            
-           {/* Image Placeholder Area */}
-           {/* Not: Resimleri eklemek istediğinizde VERBS_LIST'teki imageUrl alanını doldurun ve burayı güncelleyin */}
-           <div className="w-full h-48 bg-indigo-50 rounded-2xl mb-8 flex flex-col items-center justify-center border-2 border-dashed border-indigo-200 text-indigo-300">
+           {/* Image Area */}
+           <div className="w-full h-56 bg-white rounded-2xl mb-6 flex items-center justify-center">
              {currentCard.imageUrl ? (
-               <img src={currentCard.imageUrl} alt={currentCard.romaji} className="w-full h-full object-cover rounded-2xl" />
+               <img 
+                 src={currentCard.imageUrl} 
+                 alt={currentCard.romaji} 
+                 className="w-full h-full object-contain" 
+               />
              ) : (
-               <>
-                 <ImageIcon className="w-12 h-12 mb-2 opacity-50" />
-                 <span className="text-sm font-medium">Görsel Alanı</span>
-               </>
+               <div className="flex flex-col items-center justify-center text-indigo-200">
+                 <ImageIcon className="w-16 h-16 mb-2" />
+                 <span className="text-sm font-medium">Görsel Yok</span>
+               </div>
              )}
            </div>
 

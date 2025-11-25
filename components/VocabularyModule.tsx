@@ -7,7 +7,7 @@ interface VocabCard {
   text: string;     // Japanese
   romaji: string;   // Romaji
   meaning: string;  // Turkish
-  image: string;    // Emoji
+  image: string;    // Emoji or Image URL
   type: 'noun' | 'verb';
 }
 
@@ -21,8 +21,22 @@ const VOCAB_LIST: VocabCard[] = [
   { id: '7', text: '水', romaji: 'Mizu', meaning: 'Su', image: '💧', type: 'noun' },
   { id: '8', text: 'コーヒー', romaji: 'Koohii', meaning: 'Kahve', image: '☕', type: 'noun' },
   { id: '9', text: 'コーラ', romaji: 'Koora', meaning: 'Kola', image: '🥤', type: 'noun' },
-  { id: '10', text: '食べます', romaji: 'Tabemas', meaning: 'Yemek (Fiil)', image: '🍽️', type: 'verb' },
-  { id: '11', text: '飲みます', romaji: 'Nomimas', meaning: 'İçmek (Fiil)', image: '🥤', type: 'verb' },
+  { 
+    id: '10', 
+    text: '食べます', 
+    romaji: 'Tabemas', 
+    meaning: 'Yemek (Fiil)', 
+    image: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/tabemasu.jpg', 
+    type: 'verb' 
+  },
+  { 
+    id: '11', 
+    text: '飲みます', 
+    romaji: 'Nomimas', 
+    meaning: 'İçmek (Fiil)', 
+    image: 'https://raw.githubusercontent.com/isenbuqa/Japonca-basit-fiiller-dersi/refs/heads/main/public/images/nomimasu.jpg', 
+    type: 'verb' 
+  },
 ];
 
 interface VocabularyModuleProps {
@@ -32,6 +46,7 @@ interface VocabularyModuleProps {
 const VocabularyModule: React.FC<VocabularyModuleProps> = ({ onBack }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentCard = VOCAB_LIST[currentIndex];
+  const isImageUrl = currentCard.image.startsWith('http');
 
   const handleNext = () => {
     if (currentIndex < VOCAB_LIST.length - 1) {
@@ -71,9 +86,19 @@ const VocabularyModule: React.FC<VocabularyModuleProps> = ({ onBack }) => {
              {currentCard.type === 'verb' ? 'Fiil' : 'İsim'}
            </div>
 
-           {/* Image */}
-           <div className="text-9xl mb-8 filter drop-shadow-md animate-bounce-short">
-             {currentCard.image}
+           {/* Image or Emoji */}
+           <div className="w-full h-56 mb-6 flex items-center justify-center">
+             {isImageUrl ? (
+               <img 
+                 src={currentCard.image} 
+                 alt={currentCard.romaji} 
+                 className="w-full h-full object-contain filter drop-shadow-md"
+               />
+             ) : (
+               <div className="text-9xl filter drop-shadow-md animate-bounce">
+                 {currentCard.image}
+               </div>
+             )}
            </div>
 
            {/* Primary: Romaji */}
