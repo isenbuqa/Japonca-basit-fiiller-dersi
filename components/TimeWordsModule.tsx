@@ -18,7 +18,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'あさ', 
     romaji: 'Asa', 
     meaning: 'Sabah', 
-    imageUrl: 'asa.png', 
+    imageUrl: 'images/asa.png', 
     theme: 'bg-gradient-to-br from-orange-300 to-rose-400',
     textColor: 'text-orange-900'
   },
@@ -27,7 +27,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'ひる', 
     romaji: 'Hiru', 
     meaning: 'Öğle', 
-    imageUrl: 'hiru.png', 
+    imageUrl: 'images/hiru.png', 
     theme: 'bg-gradient-to-br from-sky-300 to-blue-400',
     textColor: 'text-blue-900'
   },
@@ -36,7 +36,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'よる', 
     romaji: 'Yoru', 
     meaning: 'Akşam / Gece', 
-    imageUrl: 'yoru.png', 
+    imageUrl: 'images/yoru.png', 
     theme: 'bg-gradient-to-br from-indigo-500 to-purple-800',
     textColor: 'text-white'
   }
