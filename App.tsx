@@ -16,6 +16,7 @@ import VocabularyModule from './components/VocabularyModule';
 import TabemasuMatchModule from './components/TabemasuMatchModule';
 import TimeWordsModule from './components/TimeWordsModule';
 import RolePlayModule from './components/RolePlayModule';
+import SimpleVerbsModule from './components/SimpleVerbsModule';
 
 // Menu Options
 type ModuleId = 'review' | 'food_drink' | 'tabemasu_match' | 'time_words' | 'role_play' | 'simple_verbs' | 'verb_master_game';
@@ -68,6 +69,11 @@ export default function App() {
   // If "Role Play" is selected
   if (activeModule === 'role_play') {
     return <RolePlayModule onBack={() => setActiveModule(null)} />;
+  }
+
+  // If "Simple Verbs" is selected
+  if (activeModule === 'simple_verbs') {
+    return <SimpleVerbsModule onBack={() => setActiveModule(null)} />;
   }
 
   // Placeholder for other modules (To be implemented)
