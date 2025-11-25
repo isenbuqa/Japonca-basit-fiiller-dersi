@@ -1,0 +1,5 @@
+{
+  "name": "Nihongo Match: Verb Master",
+  "description": "A Japanese language learning game where students match nouns and time words with the correct verbs. Features real-time validation and example sentences powered by Gemini AI.",
+  "requestFramePermissions": []
+}
