@@ -7,7 +7,7 @@ interface TimeWord {
   text: string;     // Japanese
   romaji: string;   // Romaji
   meaning: string;  // Turkish
-  imageUrl: string; // Image URL string
+  imageUrl: string; // Image Source URL
   theme: string;    // CSS Classes for background
   textColor: string;
 }
@@ -18,7 +18,9 @@ const TIME_WORDS: TimeWord[] = [
     text: 'あさ', 
     romaji: 'Asa', 
     meaning: 'Sabah', 
-    imageUrl: 'images/asa.png', 
+    // Browser-native ESM environment cannot import pngs. 
+    // We must reference them as static assets from the public root.
+    imageUrl: '/images/asa.png', 
     theme: 'bg-gradient-to-br from-orange-300 to-rose-400',
     textColor: 'text-orange-900'
   },
@@ -27,7 +29,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'ひる', 
     romaji: 'Hiru', 
     meaning: 'Öğle', 
-    imageUrl: 'images/hiru.png', 
+    imageUrl: '/images/hiru.png', 
     theme: 'bg-gradient-to-br from-sky-300 to-blue-400',
     textColor: 'text-blue-900'
   },
@@ -36,7 +38,7 @@ const TIME_WORDS: TimeWord[] = [
     text: 'よる', 
     romaji: 'Yoru', 
     meaning: 'Akşam / Gece', 
-    imageUrl: 'images/yoru.png', 
+    imageUrl: '/images/yoru.png', 
     theme: 'bg-gradient-to-br from-indigo-500 to-purple-800',
     textColor: 'text-white'
   }
@@ -87,11 +89,15 @@ const TimeWordsModule: React.FC<TimeWordsModuleProps> = ({ onBack }) => {
         `}>
            
            {/* Image Container */}
-           <div className="w-64 h-64 mb-8 rounded-full overflow-hidden border-4 border-white/50 shadow-2xl relative group">
+           <div className="w-64 h-64 mb-8 rounded-full overflow-hidden border-4 border-white/50 shadow-2xl relative group bg-white/20">
              <img 
                src={currentCard.imageUrl} 
                alt={currentCard.romaji}
                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+               onError={(e) => {
+                 // Fallback if image fails to load
+                 (e.target as HTMLImageElement).src = 'https://placehold.co/400x400?text=' + currentCard.romaji;
+               }}
              />
              {/* Shine effect */}
              <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent pointer-events-none"></div>
