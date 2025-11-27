@@ -129,7 +129,7 @@ export default function App() {
                 {item.icon}
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="text-base md:text-lg font-bold text-gray-800 group-hover:text-rose-600 transition-colors truncate">
+                <h3 className="text-base md:text-lg font-bold text-gray-800 group-hover:text-rose-600 transition-colors leading-tight">
                   {item.title}
                 </h3>
               </div>
