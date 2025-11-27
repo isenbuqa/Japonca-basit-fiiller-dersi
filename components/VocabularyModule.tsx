@@ -21,21 +21,21 @@ const VOCAB_LIST: VocabCard[] = [
   { id: '7', text: '水', romaji: 'Mizu', meaning: 'Su', image: '💧', type: 'noun' },
   { id: '8', text: 'コーヒー', romaji: 'Koohii', meaning: 'Kahve', image: '☕', type: 'noun' },
   { id: '9', text: 'コーラ', romaji: 'Koora', meaning: 'Kola', image: '🥤', type: 'noun' },
-  { 
-    id: '10', 
-    text: '食べます', 
-    romaji: 'Tabemas', 
-    meaning: 'Yemek (Fiil)', 
-    image: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/tabemasu.jpg', 
-    type: 'verb' 
+  {
+    id: '10',
+    text: '食べます',
+    romaji: 'Tabemas',
+    meaning: 'Yemek (Fiil)',
+    image: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/tabemasu.jpg',
+    type: 'verb'
   },
-  { 
-    id: '11', 
-    text: '飲みます', 
-    romaji: 'Nomimas', 
-    meaning: 'İçmek (Fiil)', 
-    image: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/nomimasu.jpg', 
-    type: 'verb' 
+  {
+    id: '11',
+    text: '飲みます',
+    romaji: 'Nomimas',
+    meaning: 'İçmek (Fiil)',
+    image: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/nomimasu.jpg',
+    type: 'verb'
   },
 ];
 
@@ -61,7 +61,7 @@ const VocabularyModule: React.FC<VocabularyModuleProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-orange-50 flex flex-col items-center">
+    <div className="min-h-[100dvh] bg-orange-50 flex flex-col items-center">
       {/* Header */}
       <div className="w-full bg-white p-3 md:p-4 shadow-sm flex items-center justify-between z-10 shrink-0">
         <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
@@ -75,60 +75,60 @@ const VocabularyModule: React.FC<VocabularyModuleProps> = ({ onBack }) => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center w-full max-w-md p-4 md:p-6 overflow-y-auto">
-        
+
         {/* Flashcard */}
         <div className="w-full bg-white rounded-3xl shadow-xl border-4 border-orange-100 overflow-hidden relative mb-6 md:mb-8 flex flex-col items-center justify-center p-4 md:p-6 transition-all duration-300 transform min-h-[400px]">
-           
-           {/* Tag */}
-           <div className={`absolute top-3 right-3 md:top-4 md:right-4 px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wide
+
+          {/* Tag */}
+          <div className={`absolute top-3 right-3 md:top-4 md:right-4 px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wide
              ${currentCard.type === 'verb' ? 'bg-rose-100 text-rose-500' : 'bg-orange-100 text-orange-500'}
            `}>
-             {currentCard.type === 'verb' ? 'Fiil' : 'İsim'}
-           </div>
+            {currentCard.type === 'verb' ? 'Fiil' : 'İsim'}
+          </div>
 
-           {/* Image or Emoji */}
-           <div className="w-full h-40 md:h-56 mb-4 md:mb-6 flex items-center justify-center">
-             {isImageUrl ? (
-               <img 
-                 src={currentCard.image} 
-                 alt={currentCard.romaji} 
-                 className="w-full h-full object-contain filter drop-shadow-md"
-               />
-             ) : (
-               <div className="text-8xl md:text-9xl filter drop-shadow-md animate-bounce">
-                 {currentCard.image}
-               </div>
-             )}
-           </div>
+          {/* Image or Emoji */}
+          <div className="w-full h-40 md:h-56 mb-4 md:mb-6 flex items-center justify-center">
+            {isImageUrl ? (
+              <img
+                src={currentCard.image}
+                alt={currentCard.romaji}
+                className="w-full h-full object-contain filter drop-shadow-md"
+              />
+            ) : (
+              <div className="text-8xl md:text-9xl filter drop-shadow-md animate-bounce">
+                {currentCard.image}
+              </div>
+            )}
+          </div>
 
-           {/* Primary: Romaji */}
-           <h1 className="text-4xl md:text-6xl font-black text-gray-800 mb-1 md:mb-2 text-center tracking-tight">
-             {currentCard.romaji}
-           </h1>
+          {/* Primary: Romaji */}
+          <h1 className="text-4xl md:text-6xl font-black text-gray-800 mb-1 md:mb-2 text-center tracking-tight">
+            {currentCard.romaji}
+          </h1>
 
-           {/* Secondary: Japanese */}
-           <h2 className="text-xl md:text-2xl text-gray-400 font-medium mb-6 md:mb-8 text-center">
-             {currentCard.text}
-           </h2>
+          {/* Secondary: Japanese */}
+          <h2 className="text-xl md:text-2xl text-gray-400 font-medium mb-6 md:mb-8 text-center">
+            {currentCard.text}
+          </h2>
 
-           {/* Tertiary: Turkish Meaning */}
-           <div className="bg-orange-50 px-4 py-2 md:px-6 md:py-3 rounded-xl border border-orange-100 w-full">
-             <p className="text-lg md:text-xl font-bold text-orange-600 text-center">
-               {currentCard.meaning}
-             </p>
-           </div>
+          {/* Tertiary: Turkish Meaning */}
+          <div className="bg-orange-50 px-4 py-2 md:px-6 md:py-3 rounded-xl border border-orange-100 w-full">
+            <p className="text-lg md:text-xl font-bold text-orange-600 text-center">
+              {currentCard.meaning}
+            </p>
+          </div>
         </div>
 
         {/* Navigation Controls */}
         <div className="flex items-center gap-3 md:gap-4 w-full mt-auto pb-4">
-          <button 
+          <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
             className={`
               flex-1 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-md flex items-center justify-center gap-2
               transition-all transform active:scale-95
-              ${currentIndex === 0 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+              ${currentIndex === 0
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'}
             `}
           >
@@ -136,14 +136,14 @@ const VocabularyModule: React.FC<VocabularyModuleProps> = ({ onBack }) => {
             Geri
           </button>
 
-          <button 
+          <button
             onClick={handleNext}
             disabled={currentIndex === VOCAB_LIST.length - 1}
             className={`
               flex-1 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-lg flex items-center justify-center gap-2
               transition-all transform active:scale-95
-              ${currentIndex === VOCAB_LIST.length - 1 
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
+              ${currentIndex === VOCAB_LIST.length - 1
+                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                 : 'bg-orange-500 text-white hover:bg-orange-600 shadow-orange-200'}
             `}
           >

@@ -84,10 +84,10 @@ const QUESTIONS: Question[] = [
     japaneseQuestion: 'どれですか？',
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
-      <img 
-        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kore.jpg" 
-        alt="Kore" 
-        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
+      <img
+        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kore.jpg"
+        alt="Kore"
+        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg"
       />
     ),
     correctAnswer: 'これ',
@@ -104,10 +104,10 @@ const QUESTIONS: Question[] = [
     japaneseQuestion: 'どれですか？',
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
-      <img 
-        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/sore.jpg" 
-        alt="Sore" 
-        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
+      <img
+        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/sore.jpg"
+        alt="Sore"
+        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg"
       />
     ),
     correctAnswer: 'それ',
@@ -124,10 +124,10 @@ const QUESTIONS: Question[] = [
     japaneseQuestion: 'どれですか？',
     turkishMeaning: 'Doğru işaret zamirini seçiniz.',
     image: (
-      <img 
-        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/are.jpg" 
-        alt="Are" 
-        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
+      <img
+        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/are.jpg"
+        alt="Are"
+        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg"
       />
     ),
     correctAnswer: 'あれ',
@@ -177,7 +177,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
 
   if (isFinished) {
     return (
-      <div className="min-h-screen bg-blue-50 flex flex-col items-center justify-center p-6 text-center">
+      <div className="min-h-[100dvh] bg-blue-50 flex flex-col items-center justify-center p-6 text-center">
         <CheckCircle className="w-20 h-20 md:w-24 md:h-24 text-green-500 mb-6" />
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Tebrikler!</h2>
         <p className="text-gray-600 mb-8">Konu tekrarını tamamladın.</p>
@@ -205,7 +205,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="min-h-screen bg-blue-50 flex flex-col">
+    <div className="min-h-[100dvh] bg-blue-50 flex flex-col">
       {/* Header */}
       <div className="bg-white p-3 md:p-4 shadow-sm flex items-center justify-between z-10 relative">
         <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full">
@@ -220,7 +220,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
       <div className="flex-1 flex flex-col items-center p-4 max-w-3xl mx-auto w-full overflow-y-auto">
         {/* Question Area */}
         <div className="bg-white rounded-3xl shadow-xl w-full p-6 md:p-8 mb-4 md:mb-6 text-center border-4 border-blue-100 mt-2">
-          
+
           <div className="mb-4 md:mb-6">
             {/* Primary: Romaji Question */}
             <h2 className="text-2xl md:text-4xl font-extrabold text-gray-800 mb-2 tracking-tight">
@@ -235,7 +235,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
               ({currentQuestion.turkishMeaning})
             </p>
           </div>
-          
+
           <div className="mb-6 md:mb-8 flex items-center justify-center min-h-[120px] md:min-h-[160px]">
             {currentQuestion.image}
           </div>
@@ -244,7 +244,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {currentQuestion.options.map((opt) => {
               let btnClass = "bg-gray-50 border-2 border-gray-200 hover:border-blue-300 text-gray-700";
-              
+
               if (selectedOption) {
                 if (opt.text === currentQuestion.correctAnswer) {
                   btnClass = "bg-green-100 border-green-500 text-green-800";
@@ -287,9 +287,9 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
                   {isCorrect ? 'Harika!' : 'Yanlış'}
                 </span>
                 {!isCorrect && (
-                   <span className="text-xs md:text-sm opacity-90">
-                     Doğru cevap: {currentQuestion.options.find(o => o.text === currentQuestion.correctAnswer)?.romaji}
-                   </span>
+                  <span className="text-xs md:text-sm opacity-90">
+                    Doğru cevap: {currentQuestion.options.find(o => o.text === currentQuestion.correctAnswer)?.romaji}
+                  </span>
                 )}
               </div>
             </div>
