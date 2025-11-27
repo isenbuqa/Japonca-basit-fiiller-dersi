@@ -80,7 +80,7 @@ export default function App() {
   if (activeModule) {
     const info = MENU_ITEMS.find(i => i.id === activeModule);
     return (
-      <div className="min-h-[100dvh] flex flex-col items-center justify-center bg-rose-50 p-4">
+      <div className="h-full flex flex-col items-center justify-center bg-rose-50 p-4">
         <div className="bg-white p-6 rounded-3xl shadow-xl max-w-sm w-full text-center border border-rose-100">
           <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${info?.color.split(' ')[0]}`}>
             {info?.icon}
@@ -100,7 +100,7 @@ export default function App() {
 
   // Main Menu
   return (
-    <div className="min-h-[100dvh] bg-[url('https://www.transparenttextures.com/patterns/shippo.png')] bg-repeat bg-rose-50 flex flex-col overflow-y-auto">
+    <div className="h-full bg-[url('https://www.transparenttextures.com/patterns/shippo.png')] bg-repeat bg-rose-50 flex flex-col overflow-y-auto">
       {/* Decorative Background Blobs */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-30 z-0">
         <div className="absolute -top-20 -left-20 w-72 h-72 md:w-96 md:h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
