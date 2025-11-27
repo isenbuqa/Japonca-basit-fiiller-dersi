@@ -8,7 +8,7 @@ interface RolePlayModuleProps {
 
 const RolePlayModule: React.FC<RolePlayModuleProps> = ({ onBack }) => {
   return (
-    <div className="h-[100dvh] bg-teal-50 flex flex-col overflow-hidden">
+    <div className="h-full bg-teal-50 flex flex-col overflow-y-auto">
       {/* Header */}
       <div className="bg-white p-4 shadow-sm flex items-center justify-between z-10 flex-shrink-0">
         <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">

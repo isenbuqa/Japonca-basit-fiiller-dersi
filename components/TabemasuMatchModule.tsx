@@ -78,7 +78,7 @@ const TabemasuMatchModule: React.FC<TabemasuMatchModuleProps> = ({ onBack }) => 
 
   if (isFinished) {
     return (
-      <div className="min-h-[100dvh] bg-purple-50 flex flex-col items-center justify-center p-6 text-center">
+      <div className="h-full bg-purple-50 flex flex-col items-center justify-center p-6 text-center overflow-y-auto">
         <div className="bg-white p-6 md:p-8 rounded-3xl shadow-xl max-w-sm w-full border border-purple-100">
           <CheckCircle className="w-16 h-16 md:w-20 md:h-20 text-green-500 mx-auto mb-6" />
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Tebrikler!</h2>
@@ -114,7 +114,7 @@ const TabemasuMatchModule: React.FC<TabemasuMatchModuleProps> = ({ onBack }) => 
   const isImageUrl = currentItem.image.startsWith('http');
 
   return (
-    <div className="min-h-[100dvh] bg-purple-50 flex flex-col">
+    <div className="h-full bg-purple-50 flex flex-col overflow-y-auto">
       {/* Header */}
       <div className="bg-white p-3 md:p-4 shadow-sm flex items-center justify-between z-10 shrink-0">
         <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full text-gray-600">

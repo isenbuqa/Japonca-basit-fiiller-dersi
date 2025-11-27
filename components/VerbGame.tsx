@@ -86,7 +86,7 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
 
   if (gameState === 'start') {
     return (
-      <div className="h-[100dvh] flex flex-col items-center justify-center p-4 md:p-6">
+      <div className="h-full flex flex-col items-center justify-center p-4 md:p-6 overflow-y-auto">
         <div className="bg-white/90 backdrop-blur p-6 md:p-8 rounded-3xl shadow-2xl text-center max-w-sm md:max-w-md w-full border border-rose-100 relative">
           <button
             onClick={onBackToMenu}
@@ -116,7 +116,7 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
 
   if (gameState === 'finished') {
     return (
-      <div className="h-[100dvh] flex flex-col items-center justify-center p-4 md:p-6">
+      <div className="h-full flex flex-col items-center justify-center p-4 md:p-6 overflow-y-auto">
         <div className="text-center animate-bounce mb-6 md:mb-8">
           <Trophy className="w-20 h-20 md:w-24 md:h-24 text-yellow-500 mx-auto drop-shadow-lg" />
         </div>
@@ -147,7 +147,7 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col relative overflow-hidden">
+    <div className="h-full flex flex-col relative overflow-y-auto">
       <header className="flex justify-between items-center p-4 z-10 shrink-0">
         <div className="flex items-center gap-2">
           <button

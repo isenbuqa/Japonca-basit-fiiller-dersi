@@ -177,7 +177,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
 
   if (isFinished) {
     return (
-      <div className="min-h-[100dvh] bg-blue-50 flex flex-col items-center justify-center p-6 text-center">
+      <div className="h-full bg-blue-50 flex flex-col items-center justify-center p-6 text-center overflow-y-auto">
         <CheckCircle className="w-20 h-20 md:w-24 md:h-24 text-green-500 mb-6" />
         <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Tebrikler!</h2>
         <p className="text-gray-600 mb-8">Konu tekrarını tamamladın.</p>
@@ -205,7 +205,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
   }
 
   return (
-    <div className="min-h-[100dvh] bg-blue-50 flex flex-col">
+    <div className="h-full bg-blue-50 flex flex-col overflow-y-auto">
       {/* Header */}
       <div className="bg-white p-3 md:p-4 shadow-sm flex items-center justify-between z-10 relative">
         <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full">

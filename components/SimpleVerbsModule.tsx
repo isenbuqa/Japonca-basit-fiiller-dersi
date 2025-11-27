@@ -83,7 +83,7 @@ const SimpleVerbsModule: React.FC<SimpleVerbsModuleProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-indigo-50 flex flex-col items-center">
+    <div className="h-full bg-indigo-50 flex flex-col items-center overflow-y-auto">
       {/* Header */}
       <div className="w-full bg-white p-3 md:p-4 shadow-sm flex items-center justify-between z-10 shrink-0">
         <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
