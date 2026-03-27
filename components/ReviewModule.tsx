@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
-import { ArrowLeft, CheckCircle, XCircle, ArrowRight, BookOpen } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, CheckCircle, XCircle, ArrowRight, BookOpen, Loader2 } from 'lucide-react';
 import { playCorrectSound, playWrongSound } from '../utils/sound';
+import { supabase } from '../utils/supabase';
 
 interface Question {
   id: string;
@@ -9,276 +10,11 @@ interface Question {
   romajiQuestion: string;
   japaneseQuestion: string;
   turkishMeaning: string;
-  image?: React.ReactNode;
+  image?: React.ReactNode | string;
   correctAnswer?: string;
   options?: { text: string; romaji: string }[];
   pairs?: { left: string; right: string }[]; // For matching type
 }
-
-const TERM1_QUESTIONS: Question[] = [
-  // --- Vocabulary Section ---
-  {
-    id: 'q1',
-    type: 'vocab',
-    romajiQuestion: 'Kore wa nan desu ka?',
-    japaneseQuestion: 'これは何ですか？',
-    turkishMeaning: 'Bu nedir?',
-    image: <span className="text-7xl md:text-9xl">📚</span>,
-    correctAnswer: '本',
-    options: [
-      { text: '本', romaji: 'Hon' },
-      { text: 'ノート', romaji: 'Nooto' },
-      { text: '鉛筆', romaji: 'Enpitsu' },
-      { text: '携帯', romaji: 'Keitai' },
-    ]
-  },
-  {
-    id: 'q2',
-    type: 'vocab',
-    romajiQuestion: 'Kore wa nan desu ka?',
-    japaneseQuestion: 'これは何ですか？',
-    turkishMeaning: 'Bu nedir?',
-    image: <span className="text-7xl md:text-9xl">📓</span>,
-    correctAnswer: 'ノート',
-    options: [
-      { text: '本', romaji: 'Hon' },
-      { text: 'ノート', romaji: 'Nooto' },
-      { text: '鉛筆', romaji: 'Enpitsu' },
-      { text: '携帯', romaji: 'Keitai' },
-    ]
-  },
-  {
-    id: 'q3',
-    type: 'vocab',
-    romajiQuestion: 'Kore wa nan desu ka?',
-    japaneseQuestion: 'これは何ですか？',
-    turkishMeaning: 'Bu nedir?',
-    image: <span className="text-7xl md:text-9xl">✏️</span>,
-    correctAnswer: '鉛筆',
-    options: [
-      { text: '本', romaji: 'Hon' },
-      { text: 'ノート', romaji: 'Nooto' },
-      { text: '鉛筆', romaji: 'Enpitsu' },
-      { text: '携帯', romaji: 'Keitai' },
-    ]
-  },
-  {
-    id: 'q4',
-    type: 'vocab',
-    romajiQuestion: 'Kore wa nan desu ka?',
-    japaneseQuestion: 'これは何ですか？',
-    turkishMeaning: 'Bu nedir?',
-    image: <span className="text-7xl md:text-9xl">📱</span>,
-    correctAnswer: '携帯',
-    options: [
-      { text: '本', romaji: 'Hon' },
-      { text: 'ノート', romaji: 'Nooto' },
-      { text: '鉛筆', romaji: 'Enpitsu' },
-      { text: '携帯', romaji: 'Keitai' },
-    ]
-  },
-  // --- Demonstratives Section ---
-  {
-    id: 'q5',
-    type: 'demo',
-    romajiQuestion: 'Dore desu ka?',
-    japaneseQuestion: 'どれですか？',
-    turkishMeaning: 'Doğru işaret zamirini seçiniz.',
-    image: (
-      <img 
-        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kore.jpg" 
-        alt="Kore" 
-        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
-      />
-    ),
-    correctAnswer: 'これ',
-    options: [
-      { text: 'これ', romaji: 'Kore' },
-      { text: 'それ', romaji: 'Sore' },
-      { text: 'あれ', romaji: 'Are' },
-    ]
-  },
-  {
-    id: 'q6',
-    type: 'demo',
-    romajiQuestion: 'Dore desu ka?',
-    japaneseQuestion: 'どれですか？',
-    turkishMeaning: 'Doğru işaret zamirini seçiniz.',
-    image: (
-      <img 
-        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/sore.jpg" 
-        alt="Sore" 
-        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
-      />
-    ),
-    correctAnswer: 'それ',
-    options: [
-      { text: 'これ', romaji: 'Kore' },
-      { text: 'それ', romaji: 'Sore' },
-      { text: 'あれ', romaji: 'Are' },
-    ]
-  },
-  {
-    id: 'q7',
-    type: 'demo',
-    romajiQuestion: 'Dore desu ka?',
-    japaneseQuestion: 'どれですか？',
-    turkishMeaning: 'Doğru işaret zamirini seçiniz.',
-    image: (
-      <img 
-        src="https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/are.jpg" 
-        alt="Are" 
-        className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" 
-      />
-    ),
-    correctAnswer: 'あれ',
-    options: [
-      { text: 'これ', romaji: 'Kore' },
-      { text: 'それ', romaji: 'Sore' },
-      { text: 'あれ', romaji: 'Are' },
-    ]
-  },
-];
-
-const TERM2_QUESTIONS: Question[] = [
-  {
-    id: 't2_q1',
-    type: 'vocab',
-    romajiQuestion: 'Japoncanın kaç alfabesi vardır?',
-    japaneseQuestion: '日本語にはいくつの文字がありますか？',
-    turkishMeaning: 'Japoncanın kaç alfabesi vardır?',
-    image: <span className="text-7xl md:text-9xl">🔤</span>,
-    correctAnswer: '3',
-    options: [
-      { text: '1', romaji: '1' },
-      { text: '2', romaji: '2' },
-      { text: '3', romaji: '3' },
-      { text: '4', romaji: '4' },
-    ]
-  },
-  {
-    id: 't2_q2',
-    type: 'vocab',
-    romajiQuestion: 'Aşağıdakilerden hangisi Japon alfabesindendir?',
-    japaneseQuestion: '次のうち、日本の文字はどれですか？',
-    turkishMeaning: 'Aşağıdakilerden hangisi Japon alfabesindendir?',
-    image: <span className="text-7xl md:text-9xl">あ</span>,
-    correctAnswer: 'Hiragana',
-    options: [
-      { text: 'Kiril', romaji: 'Kiril' },
-      { text: 'Latin', romaji: 'Latin' },
-      { text: 'Hiragana', romaji: 'Hiragana' },
-      { text: 'Arap', romaji: 'Arap' },
-    ]
-  },
-  {
-    id: 't2_q3',
-    type: 'vocab',
-    romajiQuestion: 'Japonya\'nın başkenti neresidir?',
-    japaneseQuestion: '日本の首都はどこですか？',
-    turkishMeaning: 'Japonya\'nın başkenti neresidir?',
-    image: <span className="text-7xl md:text-9xl">🗼</span>,
-    correctAnswer: 'Tokyo',
-    options: [
-      { text: 'Kyoto', romaji: 'Kyoto' },
-      { text: 'Osaka', romaji: 'Osaka' },
-      { text: 'Tokyo', romaji: 'Tokyo' },
-      { text: 'Sapporo', romaji: 'Sapporo' },
-    ]
-  },
-  {
-    id: 't2_q4',
-    type: 'vocab',
-    romajiQuestion: 'Japon kiraz çiçeklerine ne denir?',
-    japaneseQuestion: '日本の桜は何と呼ばれますか？',
-    turkishMeaning: 'Japon kiraz çiçeklerine ne denir?',
-    image: <span className="text-7xl md:text-9xl">🌸</span>,
-    correctAnswer: 'Sakura',
-    options: [
-      { text: 'Sakura', romaji: 'Sakura' },
-      { text: 'Bonsai', romaji: 'Bonsai' },
-      { text: 'Origami', romaji: 'Origami' },
-      { text: 'Sushi', romaji: 'Sushi' },
-    ]
-  },
-  {
-    id: 't2_q5',
-    type: 'vocab',
-    romajiQuestion: 'Japon bayrağı hangisidir?',
-    japaneseQuestion: '日本の国旗はどれですか？',
-    turkishMeaning: 'Japon bayrağı hangisidir?',
-    image: <span className="text-7xl md:text-9xl">🎌</span>,
-    correctAnswer: '🇯🇵',
-    options: [
-      { text: '🇯🇵', romaji: 'Japonya' },
-      { text: '🇰🇷', romaji: 'Güney Kore' },
-      { text: '🇨🇳', romaji: 'Çin' },
-      { text: '🇹🇷', romaji: 'Türkiye' },
-    ]
-  },
-  {
-    id: 't2_q6',
-    type: 'vocab',
-    romajiQuestion: 'Japonya\'nın en yüksek dağının adı nedir?',
-    japaneseQuestion: '日本で一番高い山の名前は何ですか？',
-    turkishMeaning: 'Japonya\'nın en yüksek dağının adı nedir?',
-    image: <span className="text-7xl md:text-9xl">🗻</span>,
-    correctAnswer: 'Fuji',
-    options: [
-      { text: 'Fuji', romaji: 'Fuji' },
-      { text: 'Everest', romaji: 'Everest' },
-      { text: 'Ağrı', romaji: 'Ağrı' },
-      { text: 'Kilimanjaro', romaji: 'Kilimanjaro' },
-    ]
-  },
-  {
-    id: 't2_q7',
-    type: 'vocab',
-    romajiQuestion: 'お土産 ne demektir?',
-    japaneseQuestion: 'お土産',
-    turkishMeaning: 'Omiyage ne demektir?',
-    image: <span className="text-7xl md:text-9xl">🎁</span>,
-    correctAnswer: 'Hediyelik eşya',
-    options: [
-      { text: 'Hediyelik eşya', romaji: 'Hediyelik eşya' },
-      { text: 'Araba', romaji: 'Araba' },
-      { text: 'Ev', romaji: 'Ev' },
-      { text: 'Okul', romaji: 'Okul' },
-    ]
-  },
-  {
-    id: 't2_q8',
-    type: 'vocab',
-    romajiQuestion: 'お辞儀 ne demektir?',
-    japaneseQuestion: 'お辞儀',
-    turkishMeaning: 'Ojigi ne demektir?',
-    image: <span className="text-7xl md:text-9xl">🙇</span>,
-    correctAnswer: 'Selamlaşma',
-    options: [
-      { text: 'Selamlaşma', romaji: 'Selamlaşma' },
-      { text: 'Koşma', romaji: 'Koşma' },
-      { text: 'Yüzme', romaji: 'Yüzme' },
-      { text: 'Uyumak', romaji: 'Uyumak' },
-    ]
-  },
-  {
-    id: 't2_q9',
-    type: 'matching',
-    romajiQuestion: 'Eşleştirme',
-    japaneseQuestion: 'マッチング',
-    turkishMeaning: 'Aşağıdakileri türkçe karşılıkları ile eşleştir.',
-    pairs: [
-      { left: 'Ohayoo gozaimas', right: 'Günaydın' },
-      { left: 'Oyasuminasai', right: 'İyi geceler' },
-      { left: 'Konnichiwa', right: 'İyi günler / Merhaba' },
-      { left: 'Konbanwa', right: 'İyi akşamlar' },
-      { left: 'Sayoonara', right: 'Hoşça kal' },
-      { left: 'Arigatoo gozaimas', right: 'Teşekkür ederim' },
-      { left: 'Gomennasai', right: 'Özür dilerim' },
-      { left: 'Sumimasen', right: 'Afedersiniz' },
-    ]
-  }
-];
 
 interface ReviewModuleProps {
   onBack: () => void;
@@ -286,10 +22,42 @@ interface ReviewModuleProps {
 
 const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
   const [selectedTerm, setSelectedTerm] = useState<1 | 2 | null>(null);
+  const [termQuestions, setTermQuestions] = useState<Question[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [isFinished, setIsFinished] = useState(false);
+
+  // Fetch questions when term is selected
+  useEffect(() => {
+    if (selectedTerm === null) return;
+    const fetchQuestions = async () => {
+      setIsLoading(true);
+      const { data, error } = await supabase
+        .from('review_questions')
+        .select('*')
+        .eq('term', selectedTerm);
+        
+      if (data && !error) {
+        // Map database fields to application state
+        const mappedData: Question[] = data.map(dbq => ({
+          id: dbq.id,
+          type: dbq.type as 'vocab' | 'demo' | 'matching',
+          romajiQuestion: dbq.romaji_question,
+          japaneseQuestion: dbq.japanese_question,
+          turkishMeaning: dbq.turkish_meaning,
+          image: dbq.image,
+          correctAnswer: dbq.correct_answer,
+          options: dbq.options as any,
+          pairs: dbq.pairs as any,
+        }));
+        setTermQuestions(mappedData.sort(() => Math.random() - 0.5));
+      }
+      setIsLoading(false);
+    };
+    fetchQuestions();
+  }, [selectedTerm]);
 
   // Matching game state
   const [matchedPairs, setMatchedPairs] = useState<string[]>([]);
@@ -297,7 +65,7 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
   const [selectedRight, setSelectedRight] = useState<string | null>(null);
   const [matchingFeedback, setMatchingFeedback] = useState<'correct' | 'wrong' | null>(null);
 
-  const currentQuestions = selectedTerm === 1 ? TERM1_QUESTIONS : TERM2_QUESTIONS;
+  const currentQuestions = termQuestions;
   const currentQuestion = currentQuestions[currentIndex];
 
   // Randomize pairs on mount or when question changes
@@ -461,6 +229,27 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
     );
   }
 
+  if (isLoading) {
+    return (
+      <div className="h-full bg-blue-50 flex flex-col items-center justify-center">
+        <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
+        <p className="text-blue-500 font-bold">Yükleniyor...</p>
+      </div>
+    );
+  }
+
+  if (!currentQuestion) {
+     return (
+       <div className="h-full bg-blue-50 flex flex-col items-center justify-center p-6 text-center">
+         <p className="text-gray-600 mb-4">Bu dönem için henüz soru eklenmemiş.</p>
+         <button onClick={() => setSelectedTerm(null)} className="px-6 py-2 bg-blue-600 text-white rounded-full font-bold">Geri Dön</button>
+       </div>
+     );
+  }
+
+  // Render question image appropriately (whether it's an emoji or a URL)
+  const isImageLink = typeof currentQuestion.image === 'string' && currentQuestion.image.startsWith('http');
+
   return (
     <div className="h-full bg-blue-50 flex flex-col">
       {/* Header */}
@@ -493,9 +282,13 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
             </p>
           </div>
           
-          {currentQuestion.type !== 'matching' && (
+          {currentQuestion.type !== 'matching' && currentQuestion.image && (
             <div className="mb-6 md:mb-8 flex items-center justify-center min-h-[120px] md:min-h-[160px]">
-              {currentQuestion.image}
+              {isImageLink ? (
+                 <img src={currentQuestion.image as string} alt="Soru görseli" className="h-40 md:h-64 w-full object-contain mx-auto rounded-lg" />
+              ) : (
+                 <span className="text-7xl md:text-9xl">{currentQuestion.image as string}</span>
+              )}
             </div>
           )}
 

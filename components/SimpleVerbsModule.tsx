@@ -1,77 +1,59 @@
 
-import React, { useState } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Image as ImageIcon } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ArrowLeft, ChevronLeft, ChevronRight, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { supabase } from '../utils/supabase';
 
 interface VerbCard {
   id: string;
   romaji: string;   // Prominent
   hiragana: string; // Secondary (Instead of Kanji)
   meaning: string;  // Turkish
-  imageUrl?: string; // Optional: URL for the image
+  image_url?: string; // Optional: URL for the image
 }
-
-const VERBS_LIST: VerbCard[] = [
-  { 
-    id: '1', 
-    romaji: 'Kikimas', 
-    hiragana: 'ききます', 
-    meaning: 'Dinlemek',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kikimasu.jpg'
-  },
-  { 
-    id: '2', 
-    romaji: 'Mimas', 
-    hiragana: 'みます', 
-    meaning: 'İzlemek / Görmek',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/mimasu.jpg'
-  },
-  { 
-    id: '3', 
-    romaji: 'Tsukurimas', 
-    hiragana: 'つくります', 
-    meaning: 'Yapmak (Yemek vb.)',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/tsukurimasu.jpg'
-  },
-  { 
-    id: '4', 
-    romaji: 'Yomimas', 
-    hiragana: 'よみます', 
-    meaning: 'Okumak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/yomimasu.jpg'
-  },
-  { 
-    id: '5', 
-    romaji: 'Kaimas', 
-    hiragana: 'かいます', 
-    meaning: 'Satın Almak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/kaimasu.jpg'
-  },
-  { 
-    id: '6', 
-    romaji: 'Nemas', 
-    hiragana: 'ねます', 
-    meaning: 'Uyumak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/nemasu.jpg'
-  },
-  { 
-    id: '7', 
-    romaji: 'Okimas', 
-    hiragana: 'おきます', 
-    meaning: 'Uyanmak',
-    imageUrl: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/okimasu.jpg'
-  },
-];
 
 interface SimpleVerbsModuleProps {
   onBack: () => void;
 }
 
 const SimpleVerbsModule: React.FC<SimpleVerbsModuleProps> = ({ onBack }) => {
+  const [verbsList, setVerbsList] = useState<VerbCard[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentCard = VERBS_LIST[currentIndex];
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchVerbs = async () => {
+      setIsLoading(true);
+      const { data, error } = await supabase.from('simple_verbs').select('*');
+      if (data && !error) {
+        setVerbsList(data);
+      }
+      setIsLoading(false);
+    };
+    fetchVerbs();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="h-full bg-indigo-50 flex flex-col items-center justify-center">
+        <Loader2 className="w-12 h-12 text-indigo-500 animate-spin mb-4" />
+        <p className="text-indigo-500 font-bold">Yükleniyor...</p>
+      </div>
+    );
+  }
+
+  if (verbsList.length === 0) {
+     return (
+       <div className="h-full bg-indigo-50 flex flex-col items-center justify-center p-6 text-center">
+         <p className="text-gray-600 mb-4">Henüz hiç fiil eklenmemiş.</p>
+         <button onClick={onBack} className="px-6 py-2 bg-indigo-500 text-white rounded-full font-bold">Menüye Dön</button>
+       </div>
+     );
+  }
+
+  const currentCard = verbsList[currentIndex];
 
   const handleNext = () => {
-    if (currentIndex < VERBS_LIST.length - 1) {
+    if (currentIndex < verbsList.length - 1) {
       setCurrentIndex(prev => prev + 1);
     }
   };
@@ -90,7 +72,7 @@ const SimpleVerbsModule: React.FC<SimpleVerbsModuleProps> = ({ onBack }) => {
           <ArrowLeft className="w-5 h-5 md:w-6 md:h-6" />
         </button>
         <span className="font-bold text-gray-800 text-sm md:text-base">
-          Basit Fiiller ({currentIndex + 1} / {VERBS_LIST.length})
+          Basit Fiiller ({currentIndex + 1} / {verbsList.length})
         </span>
         <div className="w-8 md:w-10"></div>
       </div>
@@ -103,9 +85,9 @@ const SimpleVerbsModule: React.FC<SimpleVerbsModuleProps> = ({ onBack }) => {
            
            {/* Image Area */}
            <div className="w-full h-40 md:h-56 bg-white rounded-2xl mb-4 md:mb-6 flex items-center justify-center">
-             {currentCard.imageUrl ? (
+             {currentCard.image_url ? (
                <img 
-                 src={currentCard.imageUrl} 
+                 src={currentCard.image_url} 
                  alt={currentCard.romaji} 
                  className="w-full h-full object-contain" 
                />
@@ -156,11 +138,11 @@ const SimpleVerbsModule: React.FC<SimpleVerbsModuleProps> = ({ onBack }) => {
 
           <button 
             onClick={handleNext}
-            disabled={currentIndex === VERBS_LIST.length - 1}
+            disabled={currentIndex === verbsList.length - 1}
             className={`
               flex-1 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-lg flex items-center justify-center gap-2
               transition-all transform active:scale-95
-              ${currentIndex === VERBS_LIST.length - 1 
+              ${currentIndex === verbsList.length - 1 
                 ? 'bg-gray-200 text-gray-400 cursor-not-allowed' 
                 : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-200'}
             `}

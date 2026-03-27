@@ -17,9 +17,13 @@ import TabemasuMatchModule from './components/TabemasuMatchModule';
 import TimeWordsModule from './components/TimeWordsModule';
 import RolePlayModule from './components/RolePlayModule';
 import SimpleVerbsModule from './components/SimpleVerbsModule';
+import TaiVerbsModule from './components/TaiVerbsModule';
+import SentenceBuilderModule from './components/SentenceBuilderModule';
+import JoinGameModule from './components/JoinGameModule';
+import { Heart, MessagesSquare, Radio } from 'lucide-react';
 
 // Menu Options
-type ModuleId = 'review' | 'food_drink' | 'tabemasu_match' | 'time_words' | 'role_play' | 'simple_verbs' | 'verb_master_game';
+type ModuleId = 'review' | 'food_drink' | 'tabemasu_match' | 'time_words' | 'role_play' | 'simple_verbs' | 'tai_verbs' | 'verb_master_game' | 'sentence_builder' | 'live_game';
 
 interface MenuItem {
   id: ModuleId;
@@ -35,7 +39,10 @@ const MENU_ITEMS: MenuItem[] = [
   { id: 'time_words', title: 'Sabah, Öğle, Akşam Kelimeleri', icon: <Sun className="w-6 h-6" />, color: 'bg-yellow-100 text-yellow-600' },
   { id: 'role_play', title: 'Rol Play (Role Play)', icon: <Users className="w-6 h-6" />, color: 'bg-teal-100 text-teal-600' },
   { id: 'simple_verbs', title: 'Japonca Basit Fiiller', icon: <Zap className="w-6 h-6" />, color: 'bg-indigo-100 text-indigo-600' },
+  { id: 'tai_verbs', title: 'İstemek (-tai) Fiilleri', icon: <Heart className="w-6 h-6" />, color: 'bg-pink-100 text-pink-600' },
+  { id: 'sentence_builder', title: 'Cümle Kurma / Boşluk Doldurma', icon: <MessagesSquare className="w-6 h-6" />, color: 'bg-amber-100 text-amber-600' },
   { id: 'verb_master_game', title: 'Oyun: Fiil Eşleştirme', icon: <Gamepad2 className="w-6 h-6" />, color: 'bg-rose-100 text-rose-600' },
+  { id: 'live_game', title: 'Canlı Sınıf Quiz (Sınıf Oyunu)', icon: <Radio className="w-6 h-6 animate-pulse" />, color: 'bg-purple-100 text-purple-600' },
 ];
 
 export default function App() {
@@ -76,6 +83,21 @@ export default function App() {
     return <SimpleVerbsModule onBack={() => setActiveModule(null)} />;
   }
 
+  // If "Tai Verbs" is selected
+  if (activeModule === 'tai_verbs') {
+    return <TaiVerbsModule onBack={() => setActiveModule(null)} />;
+  }
+
+  // If "Sentence Builder" is selected
+  if (activeModule === 'sentence_builder') {
+    return <SentenceBuilderModule onBack={() => setActiveModule(null)} />;
+  }
+
+  // If "Live Kahoot Game" is selected
+  if (activeModule === 'live_game') {
+    return <JoinGameModule onBack={() => setActiveModule(null)} />;
+  }
+
   // Placeholder for other modules (To be implemented)
   if (activeModule) {
     const info = MENU_ITEMS.find(i => i.id === activeModule);
@@ -103,13 +125,16 @@ export default function App() {
     <div className="h-full bg-[url('https://www.transparenttextures.com/patterns/shippo.png')] bg-repeat bg-rose-50 flex flex-col overflow-y-auto">
       {/* Decorative Background Blobs */}
       <div className="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none opacity-30 z-0">
-         <div className="absolute -top-20 -left-20 w-72 h-72 md:w-96 md:h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-         <div className="absolute top-40 -right-20 w-72 h-72 md:w-96 md:h-96 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+         <div className="absolute -top-20 -left-20 w-72 h-72 md:w-96 md:h-96 bg-rose-200 rounded-full mix-blend-multiply filter blur-3xl"></div>
+         <div className="absolute top-40 -right-20 w-72 h-72 md:w-96 md:h-96 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl"></div>
       </div>
 
       <div className="relative z-10 max-w-2xl mx-auto w-full p-4 md:p-6">
-        <header className="text-center py-6 md:py-8">
-          <span className="inline-block bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs md:text-sm font-bold text-rose-500 border border-rose-200 mb-3 shadow-sm">
+        <header className="text-center py-6 md:py-8 relative">
+          <a href="/admin" className="absolute -top-2 right-0 bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-gray-500 hover:text-gray-800 border border-gray-200 shadow-sm transition-colors flex items-center gap-1">
+            Admin Panel
+          </a>
+          <span className="inline-block bg-white/80 backdrop-blur px-3 py-1 rounded-full text-xs md:text-sm font-bold text-rose-500 border border-rose-200 mb-3 shadow-sm mt-4">
             N5 Başlangıç Seviyesi
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 tracking-tight mb-2">

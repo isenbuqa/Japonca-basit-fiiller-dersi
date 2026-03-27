@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, XCircle, Utensils, Coffee, RotateCcw } from 'lucide-react';
+import { ArrowLeft, CheckCircle, XCircle, Utensils, Coffee, RotateCcw, Loader2 } from 'lucide-react';
 import { playCorrectSound, playWrongSound } from '../utils/sound';
+import { supabase } from '../utils/supabase';
 
 interface GameItem {
   id: string;
@@ -10,18 +11,6 @@ interface GameItem {
   image: string;
   action: 'tabemas' | 'nomimas';
 }
-
-const ITEMS: GameItem[] = [
-  { id: '1', romaji: 'Pan', text: 'パン', image: '🍞', action: 'tabemas' },
-  { id: '2', romaji: 'Sushi', text: 'すし', image: 'https://raw.githubusercontent.com/isenbuqa/staj-dersi-img/refs/heads/main/tabemasu.jpg', action: 'tabemas' }, // Placeholder visual logic handled below
-  { id: '3', romaji: 'Keeki', text: 'ケーキ', image: '🍰', action: 'tabemas' },
-  { id: '4', romaji: 'Niku', text: '肉', image: '🥩', action: 'tabemas' },
-  { id: '5', romaji: 'Tamago', text: '卵', image: '🥚', action: 'tabemas' },
-  { id: '6', romaji: 'Gohan', text: 'ご飯', image: '🍚', action: 'tabemas' },
-  { id: '7', romaji: 'Mizu', text: '水', image: '💧', action: 'nomimas' },
-  { id: '8', romaji: 'Koohii', text: 'コーヒー', image: '☕', action: 'nomimas' },
-  { id: '9', romaji: 'Koora', text: 'コーラ', image: '🥤', action: 'nomimas' },
-];
 
 interface TabemasuMatchModuleProps {
   onBack: () => void;
@@ -33,10 +22,19 @@ const TabemasuMatchModule: React.FC<TabemasuMatchModuleProps> = ({ onBack }) => 
   const [score, setScore] = useState(0);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [isFinished, setIsFinished] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchItems = async () => {
+    setIsLoading(true);
+    const { data, error } = await supabase.from('tabemasu_items').select('*');
+    if (data && !error) {
+      setItems(data.sort(() => Math.random() - 0.5));
+    }
+    setIsLoading(false);
+  };
 
   useEffect(() => {
-    // Shuffle items on start
-    setItems([...ITEMS].sort(() => Math.random() - 0.5));
+    fetchItems();
   }, []);
 
   const currentItem = items[currentIndex];
@@ -67,14 +65,28 @@ const TabemasuMatchModule: React.FC<TabemasuMatchModuleProps> = ({ onBack }) => 
   };
 
   const restart = () => {
-    setItems([...ITEMS].sort(() => Math.random() - 0.5));
+    fetchItems();
     setCurrentIndex(0);
     setScore(0);
     setFeedback(null);
     setIsFinished(false);
   };
 
-  if (items.length === 0) return null;
+  if (isLoading) {
+    return (
+      <div className="h-full bg-purple-50 flex flex-col items-center justify-center">
+        <Loader2 className="w-12 h-12 text-purple-600 animate-spin mb-4" />
+        <p className="text-purple-600 font-bold">Yükleniyor...</p>
+      </div>
+    );
+  }
+
+  if (items.length === 0) return (
+     <div className="h-full bg-purple-50 flex flex-col items-center justify-center p-6 text-center">
+         <p className="text-gray-600 mb-4">Henüz hiç soru eklenmemiş.</p>
+         <button onClick={onBack} className="px-6 py-2 bg-purple-600 text-white rounded-full font-bold">Menüye Dön</button>
+     </div>
+  );
 
   if (isFinished) {
     return (

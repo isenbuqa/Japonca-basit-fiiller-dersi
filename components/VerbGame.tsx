@@ -1,13 +1,13 @@
 
-import React, { useState, useMemo } from 'react';
-import { WORDS, VERBS } from '../constants';
+import React, { useState, useEffect, useMemo } from 'react';
 import { WordItem, VerbItem, GameState, ValidationResult } from '../types';
 import WordCard from './WordCard';
 import VerbGrid from './VerbGrid';
 import FeedbackModal from './FeedbackModal';
 import { generateFeedback } from '../services/gemini';
-import { Sparkles, Trophy, RotateCcw, Home } from 'lucide-react';
+import { Sparkles, Trophy, RotateCcw, Home, Loader2 } from 'lucide-react';
 import { playCorrectSound, playWrongSound } from '../utils/sound';
+import { supabase } from '../utils/supabase';
 
 interface VerbGameProps {
   onBackToMenu: () => void;
@@ -20,9 +20,37 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
   const [shuffledWords, setShuffledWords] = useState<WordItem[]>([]);
   const [selectedVerb, setSelectedVerb] = useState<VerbItem | null>(null);
+  const [dbWords, setDbWords] = useState<WordItem[]>([]);
+  const [dbVerbs, setDbVerbs] = useState<VerbItem[]>([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const [wordsRes, verbsRes] = await Promise.all([
+        supabase.from('words').select('*'),
+        supabase.from('verbs').select('*')
+      ]);
+      
+      if (wordsRes.data) {
+        setDbWords(wordsRes.data.map(w => ({
+          id: w.id, 
+          text: w.text, 
+          romaji: w.romaji, 
+          image: w.image, 
+          category: w.category as any, 
+          validVerbIds: w.valid_verb_ids
+        })));
+      }
+      if (verbsRes.data) {
+        setDbVerbs(verbsRes.data);
+      }
+      setIsDataLoaded(true);
+    };
+    fetchData();
+  }, []);
 
   const startGame = () => {
-    const shuffled = [...WORDS].sort(() => Math.random() - 0.5);
+    const shuffled = [...dbWords].sort(() => Math.random() - 0.5);
     setShuffledWords(shuffled);
     setCurrentWordIndex(0);
     setScore(0);
@@ -103,12 +131,19 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
           <p className="text-gray-600 mb-6 md:mb-8 leading-relaxed text-sm md:text-base">
             Ekranda çıkan nesneleri veya zamanları doğru fiillerle eşleştir.
           </p>
-          <button 
-            onClick={startGame}
-            className="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 md:py-4 rounded-xl text-lg md:text-xl shadow-lg shadow-rose-200 transition-all transform hover:-translate-y-1 active:scale-95"
-          >
-            Dersi Başlat
-          </button>
+          
+          {!isDataLoaded ? (
+            <div className="flex justify-center my-4">
+              <Loader2 className="w-8 h-8 text-rose-500 animate-spin" />
+            </div>
+          ) : (
+            <button 
+              onClick={startGame}
+              className="w-full bg-rose-500 hover:bg-rose-600 text-white font-bold py-3 md:py-4 rounded-xl text-lg md:text-xl shadow-lg shadow-rose-200 transition-all transform hover:-translate-y-1 active:scale-95"
+            >
+              Dersi Başlat
+            </button>
+          )}
         </div>
       </div>
     );
@@ -176,7 +211,7 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
       <footer className="w-full bg-white/90 backdrop-blur-lg border-t border-rose-100 z-30 pb-safe shrink-0">
         <div className="w-full h-1 bg-gradient-to-r from-rose-200 via-rose-400 to-rose-200"></div>
         <VerbGrid 
-          verbs={VERBS} 
+          verbs={dbVerbs} 
           onSelect={handleVerbSelect} 
           disabled={gameState !== 'playing'} 
         />
