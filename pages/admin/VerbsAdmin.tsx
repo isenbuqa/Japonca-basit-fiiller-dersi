@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../utils/supabase';
-import { Loader2, Plus, Edit2, Trash2, X } from 'lucide-react';
+import { Loader2, Plus, Edit2, Trash2, X, Eye, EyeOff } from 'lucide-react';
 
 export default function VerbsAdmin() {
   const [verbs, setVerbs] = useState<any[]>([]);
@@ -31,6 +31,11 @@ export default function VerbsAdmin() {
       await supabase.from('verbs').delete().eq('id', id);
       fetchVerbs();
     }
+  };
+
+  const toggleVisibility = async (verb: any) => {
+    await supabase.from('verbs').update({ is_visible: !verb.is_visible }).eq('id', verb.id);
+    fetchVerbs();
   };
 
   const openModal = (verb: any = null) => {
@@ -84,8 +89,11 @@ export default function VerbsAdmin() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {verbs.map((verb) => (
-          <div key={verb.id} className="border border-gray-200 rounded-xl p-4 bg-white hover:shadow-md transition-shadow">
+          <div key={verb.id} className={`border border-gray-200 rounded-xl p-4 bg-white hover:shadow-md transition-shadow ${verb.is_visible === false ? 'opacity-40' : ''}`}>
             <div className="flex justify-end mb-2 gap-2">
+              <button onClick={() => toggleVisibility(verb)} className={`${verb.is_visible === false ? 'text-gray-400 hover:text-gray-600' : 'text-emerald-500 hover:text-emerald-700'}`} title={verb.is_visible === false ? 'Gizli' : 'Görünür'}>
+                {verb.is_visible === false ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
               <button onClick={() => openModal(verb)} className="text-gray-400 hover:text-indigo-600"><Edit2 className="w-4 h-4" /></button>
               <button onClick={() => handleDelete(verb.id)} className="text-gray-400 hover:text-red-600"><Trash2 className="w-4 h-4" /></button>
             </div>

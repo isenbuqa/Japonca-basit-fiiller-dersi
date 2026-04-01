@@ -26,7 +26,7 @@ const TabemasuMatchModule: React.FC<TabemasuMatchModuleProps> = ({ onBack }) => 
 
   const fetchItems = async () => {
     setIsLoading(true);
-    const { data, error } = await supabase.from('tabemasu_items').select('*');
+    const { data, error } = await supabase.from('tabemasu_items').select('*').eq('is_visible', true);
     if (data && !error) {
       setItems(data.sort(() => Math.random() - 0.5));
     }

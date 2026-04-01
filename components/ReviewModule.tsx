@@ -37,7 +37,8 @@ const ReviewModule: React.FC<ReviewModuleProps> = ({ onBack }) => {
       const { data, error } = await supabase
         .from('review_questions')
         .select('*')
-        .eq('term', selectedTerm);
+        .eq('term', selectedTerm)
+        .eq('is_visible', true);
         
       if (data && !error) {
         // Map database fields to application state

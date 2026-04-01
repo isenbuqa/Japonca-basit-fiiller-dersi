@@ -27,8 +27,8 @@ const VerbGame: React.FC<VerbGameProps> = ({ onBackToMenu }) => {
   useEffect(() => {
     const fetchData = async () => {
       const [wordsRes, verbsRes] = await Promise.all([
-        supabase.from('words').select('*'),
-        supabase.from('verbs').select('*')
+        supabase.from('words').select('*').eq('is_visible', true),
+        supabase.from('verbs').select('*').eq('is_visible', true)
       ]);
       
       if (wordsRes.data) {

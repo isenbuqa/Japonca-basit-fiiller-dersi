@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../utils/supabase';
-import { Loader2, Plus, Edit2, Trash2, X } from 'lucide-react';
+import { Loader2, Plus, Edit2, Trash2, X, Eye, EyeOff } from 'lucide-react';
 
 export default function TabemasuAdmin() {
   const [items, setItems] = useState<any[]>([]);
@@ -32,6 +32,11 @@ export default function TabemasuAdmin() {
       await supabase.from('tabemasu_items').delete().eq('id', id);
       fetchItems();
     }
+  };
+
+  const toggleVisibility = async (item: any) => {
+    await supabase.from('tabemasu_items').update({ is_visible: !item.is_visible }).eq('id', item.id);
+    fetchItems();
   };
 
   const openModal = (item: any = null) => {
@@ -88,12 +93,13 @@ export default function TabemasuAdmin() {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Görsel</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Japonca & Romaji</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Doğru Fiil</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Görünürlük</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {items.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50 transition-colors">
+              <tr key={item.id} className={`hover:bg-gray-50 transition-colors ${item.is_visible === false ? 'opacity-40' : ''}`}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center text-2xl overflow-hidden text-center">
                     {item.image && item.image.startsWith('http') ? (
@@ -111,6 +117,11 @@ export default function TabemasuAdmin() {
                   <span className={`px-3 py-1 text-xs font-bold rounded-full ${item.action === 'tabemas' ? 'bg-orange-100 text-orange-800' : 'bg-blue-100 text-blue-800'}`}>
                     {item.action === 'tabemas' ? 'Yenilir (tabemas)' : 'İçilir (nomimas)'}
                   </span>
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <button onClick={() => toggleVisibility(item)} className={`p-1.5 rounded-lg transition-colors ${item.is_visible === false ? 'text-gray-400 hover:text-gray-600 bg-gray-100' : 'text-emerald-600 hover:text-emerald-800 bg-emerald-50'}`}>
+                    {item.is_visible === false ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button onClick={() => openModal(item)} className="text-purple-600 hover:text-purple-900 mr-4"><Edit2 className="w-5 h-5 inline" /></button>

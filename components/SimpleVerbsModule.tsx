@@ -23,7 +23,7 @@ const SimpleVerbsModule: React.FC<SimpleVerbsModuleProps> = ({ onBack }) => {
   useEffect(() => {
     const fetchVerbs = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('simple_verbs').select('*');
+      const { data, error } = await supabase.from('simple_verbs').select('*').eq('is_visible', true);
       if (data && !error) {
         setVerbsList(data);
       }

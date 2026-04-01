@@ -25,7 +25,7 @@ const TimeWordsModule: React.FC<TimeWordsModuleProps> = ({ onBack }) => {
   useEffect(() => {
     const fetchTimeWords = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('time_words').select('*');
+      const { data, error } = await supabase.from('time_words').select('*').eq('is_visible', true);
       if (data && !error) {
         setTimeWords(data);
       }

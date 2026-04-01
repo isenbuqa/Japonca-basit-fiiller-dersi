@@ -39,7 +39,7 @@ const SentenceBuilderModule: React.FC<SentenceBuilderModuleProps> = ({ onBack })
   useEffect(() => {
     const fetchSentences = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('sentences').select('*');
+      const { data, error } = await supabase.from('sentences').select('*').eq('is_visible', true);
       if (data && !error) {
          // Shuffle sentences
         setSentences(data.sort(() => Math.random() - 0.5));

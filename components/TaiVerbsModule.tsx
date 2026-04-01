@@ -24,7 +24,7 @@ const TaiVerbsModule: React.FC<TaiVerbsModuleProps> = ({ onBack }) => {
   useEffect(() => {
     const fetchVerbs = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('tai_verbs').select('*');
+      const { data, error } = await supabase.from('tai_verbs').select('*').eq('is_visible', true);
       if (data && !error) {
         setVerbs(data);
       }

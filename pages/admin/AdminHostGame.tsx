@@ -127,10 +127,11 @@ export default function AdminHostGame() {
     // 1. Fetch 2. Dönem Konu Tekrarı Soruları (term = 2)
     const { data: reviews } = await supabase.from('review_questions')
       .select('*')
-      .eq('term', 2);
+      .eq('term', 2)
+      .eq('is_visible', true);
 
     // 2. Fetch Verbs (Tablo adı simple_verbs)
-    const { data: verbs } = await supabase.from('simple_verbs').select('*');
+    const { data: verbs } = await supabase.from('simple_verbs').select('*').eq('is_visible', true);
 
     const generated: QuizQuestion[] = [];
     const shapes = [

@@ -24,7 +24,7 @@ const VocabularyModule: React.FC<VocabularyModuleProps> = ({ onBack }) => {
   useEffect(() => {
     const fetchVocab = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('vocabulary_items').select('*');
+      const { data, error } = await supabase.from('vocabulary_items').select('*').eq('is_visible', true);
       if (data && !error) {
         // You might want to sort it by id or let it be
         setVocabList(data);

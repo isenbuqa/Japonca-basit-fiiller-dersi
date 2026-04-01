@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../utils/supabase';
-import { Loader2, Plus, Edit2, Trash2, X } from 'lucide-react';
+import { Loader2, Plus, Edit2, Trash2, X, Eye, EyeOff } from 'lucide-react';
 
 export default function ReviewAdmin() {
   const [questions, setQuestions] = useState<any[]>([]);
@@ -39,6 +39,11 @@ export default function ReviewAdmin() {
       await supabase.from('review_questions').delete().eq('id', id);
       fetchQuestions();
     }
+  };
+
+  const toggleVisibility = async (q: any) => {
+    await supabase.from('review_questions').update({ is_visible: !q.is_visible }).eq('id', q.id);
+    fetchQuestions();
   };
 
   const openModal = (q: any = null) => {
@@ -139,12 +144,13 @@ export default function ReviewAdmin() {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tür</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Soru (Türkçe)</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cevap</th>
+              <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Görünürlük</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {questions.map((q) => (
-              <tr key={q.id} className="hover:bg-gray-50 transition-colors">
+              <tr key={q.id} className={`hover:bg-gray-50 transition-colors ${q.is_visible === false ? 'opacity-40' : ''}`}>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="font-medium text-gray-900">{q.id}</div>
                   <div className="text-sm text-gray-500">Dönem {q.term}</div>
@@ -160,6 +166,11 @@ export default function ReviewAdmin() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
                   {q.type === 'matching' ? '(Eşleştirme)' : q.correct_answer}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-center">
+                  <button onClick={() => toggleVisibility(q)} className={`p-1.5 rounded-lg transition-colors ${q.is_visible === false ? 'text-gray-400 hover:text-gray-600 bg-gray-100' : 'text-emerald-600 hover:text-emerald-800 bg-emerald-50'}`}>
+                    {q.is_visible === false ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  </button>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button onClick={() => openModal(q)} className="text-blue-600 hover:text-blue-900 mr-4"><Edit2 className="w-5 h-5 inline" /></button>
