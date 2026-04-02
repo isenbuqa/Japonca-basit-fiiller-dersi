@@ -37,16 +37,130 @@ const SentenceBuilderModule: React.FC<SentenceBuilderModuleProps> = ({ onBack })
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const fetchSentences = async () => {
+    const generateSentences = async () => {
       setIsLoading(true);
-      const { data, error } = await supabase.from('sentences').select('*').eq('is_visible', true);
-      if (data && !error) {
-         // Shuffle sentences
-        setSentences(data.sort(() => Math.random() - 0.5));
-      }
+
+      // Fetch visible words, verbs, and simple_verbs (for Turkish verb meanings)
+      const [wordsRes, verbsRes, simpleVerbsRes] = await Promise.all([
+        supabase.from('words').select('*').eq('is_visible', true),
+        supabase.from('verbs').select('*').eq('is_visible', true),
+        supabase.from('simple_verbs').select('romaji, meaning').eq('is_visible', true)
+      ]);
+
+      const dbWords = wordsRes.data || [];
+      const dbVerbs = verbsRes.data || [];
+      const dbSimpleVerbs = simpleVerbsRes.data || [];
+
+      // Build verb lookup by id
+      const verbMap: Record<string, any> = {};
+      dbVerbs.forEach(v => { verbMap[v.id] = v; });
+
+      // Build Turkish meaning lookup for verbs (by romaji, case-insensitive)
+      const verbMeaningMap: Record<string, string> = {};
+      dbSimpleVerbs.forEach(sv => { verbMeaningMap[sv.romaji.toLowerCase()] = sv.meaning; });
+
+      // Helper: convert masu-form to tai-form
+      const toTai = (romaji: string, japaneseText: string) => ({
+        romaji: romaji.replace(/mas$/i, 'tai'),
+        hiragana: japaneseText.replace(/ます$/, 'たい')
+      });
+
+      // Collect all tai forms for distractor generation
+      const allTaiForms = dbVerbs.map(v => toTai(v.romaji, v.text));
+
+      // Generate sentences
+      const generated: SentenceData[] = [];
+
+      dbWords.forEach(word => {
+        const validVerbIds: string[] = word.valid_verb_ids || [];
+
+        validVerbIds.forEach(vid => {
+          const verb = verbMap[vid];
+          if (!verb) return; // Verb is hidden or doesn't exist
+
+          const tai = toTai(verb.romaji, verb.text);
+          const wordTurkish = word.meaning || word.romaji;
+
+          // Special Turkish meaning: します + media (games/sports) → "oynamak"
+          let verbTurkish = verbMeaningMap[verb.romaji.toLowerCase()] || '';
+          if (vid === 'v10' && word.category === 'media') {
+            verbTurkish = 'Oynamak';
+          }
+
+          // Determine particle: に for Ikimas (v11, destination), を for everything else
+          // Time words with intransitive verbs (Nemas v8, Okimas v9) use no particle
+          const isDestination = vid === 'v11';
+          const isIntransitive = vid === 'v8' || vid === 'v9';
+          const isTimeWord = word.category === 'time';
+
+          // des/です is appended to every sentence (-tai desu form)
+          const desu: WordData = { romaji: 'des', hiragana: 'です' };
+
+          let correctWords: WordData[];
+          if (isTimeWord && isIntransitive) {
+            // e.g. Yoru Netai des (Gece uyumak istiyorum)
+            correctWords = [
+              { romaji: word.romaji, hiragana: word.text },
+              { romaji: tai.romaji, hiragana: tai.hiragana },
+              desu
+            ];
+          } else {
+            const particle = isDestination
+              ? { romaji: 'ni', hiragana: 'に' }
+              : { romaji: 'o', hiragana: 'を' };
+            correctWords = [
+              { romaji: word.romaji, hiragana: word.text },
+              particle,
+              { romaji: tai.romaji, hiragana: tai.hiragana },
+              desu
+            ];
+          }
+
+          // Build Turkish meaning
+          const turkishVerbText = verbTurkish ? verbTurkish.toLowerCase() : tai.romaji;
+          const turkish = `${wordTurkish} ${turkishVerbText} istiyorum.`;
+
+          // Generate distractors
+          const distractors: WordData[] = [];
+          const otherWords = dbWords.filter(w => w.id !== word.id);
+          const otherTaiForms = allTaiForms.filter(t => t.romaji !== tai.romaji);
+
+          // 1. A random other word
+          if (otherWords.length > 0) {
+            const rw = otherWords[Math.floor(Math.random() * otherWords.length)];
+            distractors.push({ romaji: rw.romaji, hiragana: rw.text });
+          }
+          // 2. A random other tai-form verb
+          if (otherTaiForms.length > 0) {
+            const rv = otherTaiForms[Math.floor(Math.random() * otherTaiForms.length)];
+            distractors.push(rv);
+          }
+          // 3. A wrong particle (swap を ↔ に) or extra particle if no particle sentence
+          if (isTimeWord && isIntransitive) {
+            distractors.push({ romaji: 'o', hiragana: 'を' });
+          } else {
+            distractors.push(
+              isDestination
+                ? { romaji: 'o', hiragana: 'を' }
+                : { romaji: 'ni', hiragana: 'に' }
+            );
+          }
+
+          generated.push({
+            id: `gen_${word.id}_${vid}`,
+            turkish_meaning: turkish,
+            correct_words: correctWords,
+            distractors: distractors
+          });
+        });
+      });
+
+      // Shuffle and set
+      setSentences(generated.sort(() => Math.random() - 0.5));
       setIsLoading(false);
     };
-    fetchSentences();
+
+    generateSentences();
   }, []);
 
   // Initialize game board when current sentence changes

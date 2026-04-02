@@ -10,6 +10,7 @@ export default function WordsAdmin() {
   const [formData, setFormData] = useState({
     text: '',
     romaji: '',
+    meaning: '',
     image: '',
     category: 'food',
     valid_verb_ids: ['tabemas']
@@ -46,13 +47,14 @@ export default function WordsAdmin() {
       setFormData({
         text: word.text,
         romaji: word.romaji,
+        meaning: word.meaning || '',
         image: word.image || '',
         category: word.category,
         valid_verb_ids: word.valid_verb_ids || []
       });
     } else {
       setEditingWord(null);
-      setFormData({ text: '', romaji: '', image: '', category: 'food', valid_verb_ids: ['tabemas'] });
+      setFormData({ text: '', romaji: '', meaning: '', image: '', category: 'food', valid_verb_ids: ['tabemas'] });
     }
     setIsModalOpen(true);
   };
@@ -95,6 +97,7 @@ export default function WordsAdmin() {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Görsel</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Japonca</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Romaji</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Anlamı</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
               <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Görünürlük</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">İşlemler</th>
@@ -114,6 +117,7 @@ export default function WordsAdmin() {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{word.text}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-gray-500">{word.romaji}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-gray-600">{word.meaning || <span className="text-gray-300 italic">-</span>}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                     {word.category}
@@ -153,6 +157,11 @@ export default function WordsAdmin() {
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Romaji (Okunuş)</label>
                 <input required type="text" value={formData.romaji} onChange={e => setFormData({...formData, romaji: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Türkçe Anlamı</label>
+                <input type="text" value={formData.meaning} onChange={e => setFormData({...formData, meaning: e.target.value})} placeholder="Örn: Kitap, Ekmek" className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" />
               </div>
               
               <div>
