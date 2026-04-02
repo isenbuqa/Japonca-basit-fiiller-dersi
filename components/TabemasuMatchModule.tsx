@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { ArrowLeft, CheckCircle, XCircle, Utensils, Coffee, RotateCcw, Loader2 } from 'lucide-react';
+import { ArrowLeft, CheckCircle, XCircle, RotateCcw, Loader2 } from 'lucide-react';
 import { playCorrectSound, playWrongSound } from '../utils/sound';
 import { supabase } from '../utils/supabase';
 
@@ -184,11 +184,8 @@ const TabemasuMatchModule: React.FC<TabemasuMatchModuleProps> = ({ onBack }) => 
                 disabled={!!feedback}
                 className="group relative bg-white border-b-4 border-purple-200 active:border-b-0 active:translate-y-1 rounded-2xl p-3 md:p-4 flex flex-col items-center justify-center shadow-lg hover:bg-purple-50 transition-all h-28 md:h-32"
             >
-                <div className="bg-purple-100 p-2 md:p-3 rounded-full mb-1 md:mb-2 group-hover:scale-110 transition-transform">
-                    <Utensils className="w-6 h-6 md:w-8 md:h-8 text-purple-600" />
-                </div>
-                <span className="text-lg md:text-xl font-bold text-gray-800">Tabemas</span>
-                <span className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1">食べます</span>
+                <span className="text-2xl md:text-3xl font-black text-gray-800 tracking-wide">Tabemas</span>
+                <span className="text-base md:text-lg text-gray-500 font-medium mt-1 md:mt-2">食べます</span>
             </button>
 
             <button
@@ -196,11 +193,8 @@ const TabemasuMatchModule: React.FC<TabemasuMatchModuleProps> = ({ onBack }) => 
                 disabled={!!feedback}
                 className="group relative bg-white border-b-4 border-blue-200 active:border-b-0 active:translate-y-1 rounded-2xl p-3 md:p-4 flex flex-col items-center justify-center shadow-lg hover:bg-blue-50 transition-all h-28 md:h-32"
             >
-                 <div className="bg-blue-100 p-2 md:p-3 rounded-full mb-1 md:mb-2 group-hover:scale-110 transition-transform">
-                    <Coffee className="w-6 h-6 md:w-8 md:h-8 text-blue-600" />
-                </div>
-                <span className="text-lg md:text-xl font-bold text-gray-800">Nomimas</span>
-                <span className="text-[10px] md:text-xs text-gray-400 mt-0.5 md:mt-1">飲みます</span>
+                <span className="text-2xl md:text-3xl font-black text-gray-800 tracking-wide">Nomimas</span>
+                <span className="text-base md:text-lg text-gray-500 font-medium mt-1 md:mt-2">飲みます</span>
             </button>
         </div>
 
