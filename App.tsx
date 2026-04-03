@@ -20,10 +20,11 @@ import SimpleVerbsModule from './components/SimpleVerbsModule';
 import TaiVerbsModule from './components/TaiVerbsModule';
 import SentenceBuilderModule from './components/SentenceBuilderModule';
 import JoinGameModule from './components/JoinGameModule';
-import { Heart, MessagesSquare, Radio } from 'lucide-react';
+import { Heart, MessagesSquare, Radio, ClipboardCheck } from 'lucide-react';
+import VocabTestModule from './components/VocabTestModule';
 
 // Menu Options
-type ModuleId = 'review' | 'food_drink' | 'tabemasu_match' | 'time_words' | 'role_play' | 'simple_verbs' | 'tai_verbs' | 'verb_master_game' | 'sentence_builder' | 'live_game';
+type ModuleId = 'review' | 'food_drink' | 'tabemasu_match' | 'time_words' | 'role_play' | 'simple_verbs' | 'tai_verbs' | 'verb_master_game' | 'sentence_builder' | 'live_game' | 'vocab_test';
 
 interface MenuItem {
   id: ModuleId;
@@ -42,6 +43,7 @@ const MENU_ITEMS: MenuItem[] = [
   { id: 'tai_verbs', title: 'İstemek (-tai) Fiilleri', icon: <Heart className="w-6 h-6" />, color: 'bg-pink-100 text-pink-600' },
   { id: 'sentence_builder', title: 'Cümle Kurma / Boşluk Doldurma', icon: <MessagesSquare className="w-6 h-6" />, color: 'bg-amber-100 text-amber-600' },
   { id: 'verb_master_game', title: 'Oyun: Fiil Eşleştirme', icon: <Gamepad2 className="w-6 h-6" />, color: 'bg-rose-100 text-rose-600' },
+  { id: 'vocab_test', title: 'Kelime Testi (Japonca-Türkçe)', icon: <ClipboardCheck className="w-6 h-6" />, color: 'bg-sky-100 text-sky-600' },
   { id: 'live_game', title: 'Canlı Sınıf Quiz (Sınıf Oyunu)', icon: <Radio className="w-6 h-6 animate-pulse" />, color: 'bg-purple-100 text-purple-600' },
 ];
 
@@ -91,6 +93,11 @@ export default function App() {
   // If "Sentence Builder" is selected
   if (activeModule === 'sentence_builder') {
     return <SentenceBuilderModule onBack={() => setActiveModule(null)} />;
+  }
+
+  // If "Vocab Test" is selected
+  if (activeModule === 'vocab_test') {
+    return <VocabTestModule onBack={() => setActiveModule(null)} />;
   }
 
   // If "Live Kahoot Game" is selected

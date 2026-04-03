@@ -12,6 +12,7 @@ import TaiVerbsAdmin from './TaiVerbsAdmin';
 import SentenceBuilderAdmin from './SentenceBuilderAdmin';
 import ReviewAdmin from './ReviewAdmin';
 import AdminHostGame from './AdminHostGame';
+import VocabTestAdmin from './VocabTestAdmin';
 
 export default function AdminLayout() {
   const location = useLocation();
@@ -43,6 +44,7 @@ export default function AdminLayout() {
     { name: 'İstemek (-tai) Fiilleri', path: '/admin/tai-verbs' },
     { name: 'Cümle Kurma', path: '/admin/sentence-builder' },
     { name: 'Konu Tekrarı', path: '/admin/review' },
+    { name: 'Kelime Testi', path: '/admin/vocab-test' },
     { name: 'Canlı Oyun Yönetimi (Kahoot)', path: '/admin/live-game' },
   ];
 
@@ -109,6 +111,7 @@ export default function AdminLayout() {
             <Route path="tai-verbs" element={<TaiVerbsAdmin />} />
             <Route path="sentence-builder" element={<SentenceBuilderAdmin />} />
             <Route path="review" element={<ReviewAdmin />} />
+            <Route path="vocab-test" element={<VocabTestAdmin />} />
             <Route path="live-game" element={<AdminHostGame />} />
             <Route path="*" element={<div className="p-8 text-center text-gray-500">Lütfen yukarıdan bir kategori seçin.</div>} />
           </Routes>
