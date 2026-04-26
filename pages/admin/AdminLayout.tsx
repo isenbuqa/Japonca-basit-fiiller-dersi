@@ -13,6 +13,7 @@ import SentenceBuilderAdmin from './SentenceBuilderAdmin';
 import ReviewAdmin from './ReviewAdmin';
 import AdminHostGame from './AdminHostGame';
 import VocabTestAdmin from './VocabTestAdmin';
+import ModulesAdmin from './ModulesAdmin';
 
 export default function AdminLayout() {
   const location = useLocation();
@@ -46,6 +47,7 @@ export default function AdminLayout() {
     { name: 'Konu Tekrarı', path: '/admin/review' },
     { name: 'Kelime Testi', path: '/admin/vocab-test' },
     { name: 'Canlı Oyun Yönetimi (Kahoot)', path: '/admin/live-game' },
+    { name: 'Ana Sayfa Etkinlikleri', path: '/admin/modules' },
   ];
 
   if (loadingSession) {
@@ -113,6 +115,7 @@ export default function AdminLayout() {
             <Route path="review" element={<ReviewAdmin />} />
             <Route path="vocab-test" element={<VocabTestAdmin />} />
             <Route path="live-game" element={<AdminHostGame />} />
+            <Route path="modules" element={<ModulesAdmin />} />
             <Route path="*" element={<div className="p-8 text-center text-gray-500">Lütfen yukarıdan bir kategori seçin.</div>} />
           </Routes>
         </div>

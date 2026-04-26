@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { supabase } from './utils/supabase';
 import { 
   BookOpen, 
   Utensils, 
@@ -49,6 +50,30 @@ const MENU_ITEMS: MenuItem[] = [
 
 export default function App() {
   const [activeModule, setActiveModule] = useState<ModuleId | null>(null);
+  const [visibleModules, setVisibleModules] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    const fetchModules = async () => {
+      try {
+        const { data, error } = await supabase.from('app_modules').select('id, is_visible');
+        if (error) {
+          console.error("Tablo hatası:", error);
+          return;
+        }
+        
+        if (data) {
+          const visMap: Record<string, boolean> = {};
+          data.forEach(item => {
+            visMap[item.id] = item.is_visible;
+          });
+          setVisibleModules(visMap);
+        }
+      } catch (err) {
+        console.error("Modüller yüklenirken beklenmeyen hata oluştu:", err);
+      }
+    };
+    fetchModules();
+  }, []);
 
   // If the "Verb Master" game is selected, render the game component
   if (activeModule === 'verb_master_game') {
@@ -151,7 +176,7 @@ export default function App() {
         </header>
 
         <div className="grid gap-3 md:gap-4 pb-12">
-          {MENU_ITEMS.map((item) => (
+          {MENU_ITEMS.filter(item => visibleModules[item.id] !== false).map((item) => (
             <button
               key={item.id}
               onClick={() => setActiveModule(item.id)}
